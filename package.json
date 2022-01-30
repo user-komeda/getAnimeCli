@@ -19,7 +19,12 @@
   "dependencies": {
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.0.1"
+    "@oclif/plugin-plugins": "^2.0.1",
+    "@types/axios": "^0.14.0",
+    "@types/inquirer": "^8.2.0",
+    "axios": "^0.25.0",
+    "cli-ux": "^6.0.8",
+    "inquirer": "^8.2.0"
   },
   "devDependencies": {
     "@oclif/test": "^2",
