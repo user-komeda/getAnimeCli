@@ -24,6 +24,7 @@
     "@types/inquirer": "^8.2.0",
     "axios": "^0.25.0",
     "cli-ux": "^6.0.8",
+    "csv-writer": "^1.6.0",
     "inquirer": "^8.2.0"
   },
   "devDependencies": {

@@ -44,25 +44,25 @@ hello friend from oclif! (./src/commands/hello/index.ts)
       let category = `Category:${this.year}年のテレビアニメ`
       this.buildUrl(category)
       this.getAnimeTitles(this.year, this.baseUrl)
-      await sleep(10000)
+      await sleep(10_000)
 
       this.log('web')
-      category = `Category:2020年のWebアニメ`
+      category = 'Category:2020年のWebアニメ'
       this.buildUrl(category)
       this.getAnimeTitles(this.year, this.baseUrl)
-      await sleep(10000)
+      await sleep(10_000)
 
       this.log('movie')
       category = `Category:${this.year}年のアニメ映画`
       this.buildUrl(category)
       this.getAnimeTitles(this.year, this.baseUrl)
-      await sleep(10000)
+      await sleep(10_000)
 
       this.log('ova')
       category = `Category:${this.year}年のOVA`
       this.buildUrl(category)
       this.getAnimeTitles(this.year, this.baseUrl)
-      await sleep(10000)
+      await sleep(10_000)
       break
     default:
       break
