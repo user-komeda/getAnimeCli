@@ -1,6 +1,22 @@
 {
   "extends": [
     "oclif",
-    "oclif-typescript"
-  ]
+    "oclif-typescript",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-prettier",
+    "google",
+    "prettier" // prettierのextendsは最後に記述
+  ],
+  "plugins": ["@typescript-eslint", "unicorn"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "root": true,
+  "rules": {
+    "object-curly-spacing": ["off"],
+    "unicorn/filename-case": ["off"]
+  }
 }

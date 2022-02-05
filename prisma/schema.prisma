@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:Anikosama@9219@localhost:3306/mysql"
+}
+
+model anime {
+  id            Int       @id
+  anime_name    String?   @db.VarChar(255)
+  anime_en_name String?   @db.VarChar(255)
+  anime_year    DateTime? @db.Date
+  anime_cool    Int?
+}
