@@ -4,13 +4,58 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:Anikosama@9219@localhost:3306/mysql"
+  url      = "mysql://root:Anikosama@9219@localhost:3306/anime"
 }
 
 model anime {
-  id            Int       @id
-  anime_name    String?   @db.VarChar(255)
-  anime_en_name String?   @db.VarChar(255)
-  anime_year    DateTime? @db.Date
+  id            Int           @id
+  anime_name    String?       @db.VarChar(255)
+  anime_en_name String?       @db.VarChar(255)
+  anime_year    DateTime?     @db.Date
   anime_cool    Int?
+  sound         sound[]
+  caracter      caracter[]
+  staff         staff[]
+  voice_actor   voice_actor[]
+  episode       episode[]
+}
+
+model sound {
+  id       Int     @id
+  anime    anime?  @relation(fields: [anime_Id], references: [id])
+  anime_Id Int
+  op       String? @db.VarChar(255)
+  ed       String? @db.VarChar(255)
+}
+
+model caracter {
+  id          Int           @id
+  anime_Id    Int
+  anime       anime?        @relation(fields: [anime_Id], references: [id])
+  caracter    String?       @db.VarChar(255)
+  voice_actor voice_actor[]
+}
+
+model staff {
+  id       Int     @id
+  anime_Id Int
+  anime    anime?  @relation(fields: [anime_Id], references: [id])
+  staff    String? @db.VarChar(255)
+}
+
+model voice_actor {
+  id          Int       @id
+  caracter_Id Int
+  caracter    caracter? @relation(fields: [caracter_Id], references: [id])
+  voice_actor String?   @db.VarChar(255)
+  anime       anime?    @relation(fields: [animeId], references: [id])
+  animeId     Int?
+}
+
+model episode {
+  id            Int     @id
+  anime         anime?  @relation(fields: [anime_Id], references: [id])
+  anime_Id      Int
+  episode       String? @db.VarChar(255)
+  episode_title String? @db.VarChar(255)
 }
