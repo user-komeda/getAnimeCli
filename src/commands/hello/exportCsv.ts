@@ -1,10 +1,11 @@
-import {Command, Flags} from '@oclif/core'
-import axios from 'axios'
+import { Command, Flags } from '@oclif/core'
 import * as csvWriter from 'csv-writer'
 import csvObject from '../../types/csvObject'
 import header from '../../types/header'
-// eslint-disable-next-line no-promise-executor-return
 
+/**
+ *
+ */
 export default class ExportCsv extends Command {
   static description = 'Say hello'
 
@@ -16,21 +17,24 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 `,
   ]
 
-  static args = [{name: 'data'}]
+  static args = [{ name: 'data' }]
 
   static flags = {
-    content: Flags.string({options: ['title', 'en-title']}),
+    content: Flags.string({ options: ['title', 'en-title'] }),
   }
 
-  async run(): Promise<void> {
-    const {args} = await this.parse(ExportCsv)
+  /**
+   *
+   */
+  async run (): Promise<void> {
+    const { args } = await this.parse(ExportCsv)
     const dates: string[] = args.data.split(',')
     const headers: Array<header> = [
       {
         id: 'id',
         title: 'ID',
       },
-      {id: 'name', title: 'NAME'},
+      { id: 'name', title: 'NAME' },
     ]
     const csvObject: Array<csvObject> = []
     dates.sort()
@@ -50,12 +54,12 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     }
 
     writer
-    .writeRecords(csvObject)
-    .then(() => {
-      this.log('sucsess')
-    })
-    .catch((error: string | undefined) => {
-      this.log(error)
-    })
+      .writeRecords(csvObject)
+      .then(() => {
+        this.log('sucsess')
+      })
+      .catch((error: string | undefined) => {
+        this.log(error)
+      })
   }
 }

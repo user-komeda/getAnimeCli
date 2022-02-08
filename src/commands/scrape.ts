@@ -7,11 +7,16 @@ import * as inquirer from 'inquirer'
 
 const sleep = (sec: number) => new Promise(resolve => setTimeout(resolve, sec))
 
+/**
+ *
+ */
 export default class Scrape extends Command {
   static description = 'describe the command here'
 
   static examples = ['<%= config.bin %> <%= command.id %>']
-
+  /**
+   *
+   */
   public async run (): Promise<void> {
     const responses: any = await inquirer.prompt([
       {
@@ -22,9 +27,9 @@ export default class Scrape extends Command {
           { name: 'winter' },
           { name: 'spring' },
           { name: 'summer' },
-          { name: 'autumn' }
-        ]
-      }
+          { name: 'autumn' },
+        ],
+      },
     ])
     const year = await cliUx.prompt('Please enter the year you want to get')
     const url = `https://annict.com/db/works?season_slugs%5B%5D=${year}-${responses.content}&commit=%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B`

@@ -1,4 +1,4 @@
 export default interface csvObject {
-  id:number;
-  name:string;
+  id: number
+  name: string
 }
