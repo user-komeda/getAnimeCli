@@ -8,11 +8,10 @@
     "strict": true,
     "target": "es2019",
     "baseUrl": "./",
+    "composite": true,
     "paths": {
       "csv-writer": ["src/types/csvWriter"]
-    },
+    }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

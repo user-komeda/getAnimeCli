@@ -17,6 +17,7 @@
   "root": true,
   "rules": {
     "object-curly-spacing": ["off"],
-    "unicorn/filename-case": ["off"]
+    "unicorn/filename-case": ["off"],
+    "valid-jsdoc": ["off"]
   }
 }

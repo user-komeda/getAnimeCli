@@ -14,7 +14,7 @@ model anime {
   anime_year    DateTime?     @db.Date
   anime_cool    Int?
   sound         sound[]
-  caracter      caracter[]
+  caracter      character[]
   staff         staff[]
   voice_actor   voice_actor[]
   episode       episode[]
@@ -28,11 +28,11 @@ model sound {
   ed       String? @db.VarChar(255)
 }
 
-model caracter {
+model character {
   id          Int           @id
   anime_Id    Int
   anime       anime?        @relation(fields: [anime_Id], references: [id])
-  caracter    String?       @db.VarChar(255)
+  character   String?       @db.VarChar(255)
   voice_actor voice_actor[]
 }
 
@@ -44,12 +44,12 @@ model staff {
 }
 
 model voice_actor {
-  id          Int       @id
-  caracter_Id Int
-  caracter    caracter? @relation(fields: [caracter_Id], references: [id])
-  voice_actor String?   @db.VarChar(255)
-  anime       anime?    @relation(fields: [animeId], references: [id])
-  animeId     Int?
+  id           Int        @id
+  character_Id Int
+  caracter     character? @relation(fields: [character_Id], references: [id])
+  voice_actor  String?    @db.VarChar(255)
+  anime        anime?     @relation(fields: [animeId], references: [id])
+  animeId      Int?
 }
 
 model episode {

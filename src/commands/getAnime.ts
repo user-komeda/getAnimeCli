@@ -2,12 +2,12 @@ import { Command, Flags } from '@oclif/core'
 import * as inquirer from 'inquirer'
 import axios from 'axios'
 import cliUx from 'cli-ux'
-// eslint-disable-next-line no-promise-executor-return
-const sleep = (sec: number) => new Promise(resolve => setTimeout(resolve, sec))
+import { sleep } from '../Util/sleep'
+
 /**
- *
+ * anime取得
  */
-export default class Hello extends Command {
+export default class GetAnime extends Command {
   static description = 'Say hello'
 
   private baseUrl: URL = new URL('https://ja.wikipedia.org/w/api.php?')
@@ -25,13 +25,13 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   static args = [{ name: 'person', description: 'Person to say hello to' }]
 
   /**
-   *
+   * メイン処理
    */
-  async run (): Promise<void> {
-    const { flags } = await this.parse(Hello)
+  async run(): Promise<void> {
+    const { flags } = await this.parse(GetAnime)
     let stage = flags.content
     if (!stage) {
-      const responses: any = await inquirer.prompt([
+      const responses = await inquirer.prompt([
         {
           name: 'content',
           message: 'select a content',
@@ -42,11 +42,13 @@ hello friend from oclif! (./src/commands/hello/index.ts)
       stage = responses.content
     }
 
+    let category = ''
+
     switch (stage) {
       case 'title':
         this.year = await cliUx.prompt('Please enter the year you want to get')
         this.log('anime')
-        let category = `Category:${this.year}年のテレビアニメ`
+        category = `Category:${this.year}年のテレビアニメ`
         this.buildUrl(category)
         this.getAnimeTitles(this.year, this.baseUrl)
         await sleep(10_000)
@@ -79,18 +81,18 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * @param url
    * @returns
    */
-  private getAnimeTitles (year: string, url: URL): string {
+  private getAnimeTitles(year: string, url: URL): string {
     this.log(url.toString())
     axios
       .get(url.toString())
-      .then(response => {
+      .then((response) => {
         const categorymembers = response.data.query.categorymembers
         this.log(categorymembers.length)
         for (const categorymember of categorymembers) {
           this.log(categorymember.title)
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.log(error)
       })
 
@@ -98,10 +100,10 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   }
 
   /**
-   *
+   * リクエストURLを作成
    * @param category
    */
-  private buildUrl (category: string): void {
+  private buildUrl(category: string): void {
     this.baseUrl.searchParams.append('action', 'query')
     this.baseUrl.searchParams.append('list', 'categorymembers')
     this.baseUrl.searchParams.append('cmtitle', category)
