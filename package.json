@@ -35,7 +35,7 @@
     "eslint-plugin-unicorn": "^40.1.0",
     "inquirer": "^8.2.0",
     "jsdom": "^19.0.0",
-    "node-fetch": "^3.2.0",
+    "node-fetch": "^3.2.3",
     "prettier": "^2.5.1",
     "prisma": "^3.9.1"
   },
