@@ -1,50 +1,49 @@
-/* eslint-disable no-await-in-loop */
 import { Command, Flags } from '@oclif/core'
-import { PrismaClient, Prisma } from '@prisma/client'
-import AnimeTable from 'src/types/AnimeTable'
-import SoundTable from 'src/types/SountTable'
-import StaffTable from 'src/types/StaffTable'
-import caracterTable from 'src/types/caracterTable'
-import voiceActorTable from 'src/types/voiceActorTable'
-import episodeTable from 'src/types/EpisodeTable'
-import * as inquirer from 'inquirer'
+import { PrismaClient } from '@prisma/client'
+import AnimeTable from '../types/AnimeTable'
+import SoundTable from '../types/SoundTable'
+import StaffTable from '../types/StaffTable'
+import characterTable from '../types/CharacterTable'
+import voiceActorTable from '../types/voiceActorTable'
+import episodeTable from '../types/EpisodeTable'
 
 /**
- *
+ * データベースにレコードを登録する
  */
-export default class Add extends Command {
+export default class AddRecord extends Command {
   static description = 'describe the command here'
 
   static examples = ['<%= config.bin %> <%= command.id %>']
 
   static flags = {
-    // flag with a value (-n, --name=VALUE)
     name: Flags.string({ char: 'n', description: 'name to print' }),
   }
 
   static args = [{ name: 'data' }]
 
   /**
-   *
+   * メイン処理
    */
   public async run (): Promise<void> {
-    const { args, flags } = await this.parse(Add)
+    //  動作確認用にコメントアウト
 
-    const responses: any = await inquirer.prompt([
-      {
-        name: 'content',
-        message: 'select insert table',
-        type: 'list',
-        choices: [
-          { name: 'anime' },
-          { name: 'sound' },
-          { name: 'caracter' },
-          { name: 'staff' },
-          { name: 'episode' },
-          { name: 'voice_actor' },
-        ],
-      },
-    ])
+    // const { args, flags } = await this.parse(Add)
+
+    // const responses: any = await inquirer.prompt([
+    //   {
+    //     name: 'content',
+    //     message: 'select insert table',
+    //     type: 'list',
+    //     choices: [
+    //       { name: 'anime' },
+    //       { name: 'sound' },
+    //       { name: 'character' },
+    //       { name: 'staff' },
+    //       { name: 'episode' },
+    //       { name: 'voice_actor' },
+    //     ],
+    //   },
+    // ])
 
     const data: Array<AnimeTable> = [
       {
@@ -81,12 +80,13 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * レコード登録関数
+   * @param dates 登録データ
    */
-  private async addRecordAnime (datas: Array<AnimeTable>) {
+  private async addRecordAnime (dates: Array<AnimeTable>) {
     const prisma = new PrismaClient()
 
-    for (const data of datas) {
+    for (const data of dates) {
       const anime = await prisma.anime.upsert({
         where: {
           id: data.id,
@@ -110,7 +110,7 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * animeテーブル登録関数
    * @param datas
    */
   private async addRecordSound (datas: Array<SoundTable>) {
@@ -138,7 +138,7 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * staffテーブル登録関数
    * @param datas
    */
   private async addRecordStaff (datas: Array<StaffTable>) {
@@ -164,24 +164,25 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * キャラクタテーブル登録関数
+   * @param datas
    */
-  private async addRecordCaracter (datas: Array<caracterTable>) {
+  private async addRecordCharacter (datas: Array<characterTable>) {
     const prisma = new PrismaClient()
 
     for (const data of datas) {
-      const anime = await prisma.caracter.upsert({
+      const anime = await prisma.character.upsert({
         where: {
           id: data.id,
         },
         update: {
           anime_Id: data.anime_Id,
-          caracter: data.caracter,
+          character: data.character,
         },
         create: {
           id: data.id,
           anime_Id: data.anime_Id,
-          caracter: data.caracter,
+          character: data.character,
         },
       })
       console.log(anime)
@@ -189,7 +190,7 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * voiceActorテーブル登録関数
    */
   private async addRecordVoiceActor (datas: Array<voiceActorTable>) {
     const prisma = new PrismaClient()
@@ -200,13 +201,13 @@ export default class Add extends Command {
           id: data.id,
         },
         update: {
-          caracter_Id: data.caracter_Id,
+          character_Id: data.character_Id,
           voice_actor: data.voice_actor,
           animeId: data.animeId,
         },
         create: {
           id: data.id,
-          caracter_Id: data.caracter_Id,
+          character_Id: data.character_Id,
           voice_actor: data.voice_actor,
           animeId: data.animeId,
         },
@@ -216,7 +217,7 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * episodeテーブル登録関数
    * @param datas
    */
   private async addRecordEpisode (datas: Array<episodeTable>) {
@@ -244,7 +245,7 @@ export default class Add extends Command {
   }
 
   /**
-   *
+   * 登録したいコンテンツ選択
    * @param content
    */
   private whichSelectContent (content: string, datas: Array<AnimeTable>) {
@@ -254,7 +255,7 @@ export default class Add extends Command {
         break
       case 'sound':
         break
-      case 'caracter':
+      case 'character':
         break
       case 'staff':
         break
