@@ -95,15 +95,12 @@
   "keywords": [
     "oclif"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-format"
-    }
+
+  "lint-staged": {
+    "./src/**": [
+      "yarn lint",
+      "yarn format"
+    ]
   },
-
- "lint-staged": {
-  "./src/*.{js,ts}": "lint-format"
-},
-
   "types": "dist/index.d.ts"
 }
