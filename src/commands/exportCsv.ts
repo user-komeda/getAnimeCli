@@ -24,7 +24,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   /**
    * メイン処理
    */
-  async run(): Promise<void> {
+  async run (): Promise<void> {
     this.log('export')
     const { args } = await this.parse(ExportCsv)
     // データをカンマ区切りにする

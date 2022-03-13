@@ -16,7 +16,7 @@ export default class Scrape extends Command {
   /**
    * メイン処理
    */
-  public async run(): Promise<void> {
+  public async run (): Promise<void> {
     const responses = await inquirer.prompt([
       {
         name: 'content',
@@ -41,7 +41,7 @@ export default class Scrape extends Command {
     const test: NodeListOf<Element> = document.querySelectorAll(
       '.table > tbody > tr >td > a'
     )
-    const array: (string | undefined)[] = [...test].map((test) => {
+    const array: (string | undefined)[] = [...test].map(test => {
       return test.textContent?.trim()
     })
 
@@ -56,10 +56,10 @@ export default class Scrape extends Command {
    *
    * @param baseUrl
    */
-  private async getScrapeData(baseUrl: string, data: string | undefined) {
+  private async getScrapeData (baseUrl: string, data: string | undefined) {
     const response = await axios
       .get(baseUrl + 'works/' + data + '/info')
-      .then((response) => {
+      .then(response => {
         return response
       })
     const html: string = response.data

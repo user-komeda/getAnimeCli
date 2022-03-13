@@ -27,7 +27,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   /**
    * メイン処理
    */
-  async run(): Promise<void> {
+  async run (): Promise<void> {
     const { flags } = await this.parse(GetAnime)
     let stage = flags.content
     if (!stage) {
@@ -81,18 +81,18 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * @param url
    * @returns
    */
-  private getAnimeTitles(year: string, url: URL): string {
+  private getAnimeTitles (year: string, url: URL): string {
     this.log(url.toString())
     axios
       .get(url.toString())
-      .then((response) => {
+      .then(response => {
         const categorymembers = response.data.query.categorymembers
         this.log(categorymembers.length)
         for (const categorymember of categorymembers) {
           this.log(categorymember.title)
         }
       })
-      .catch((error) => {
+      .catch(error => {
         this.log(error)
       })
 
@@ -103,7 +103,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * リクエストURLを作成
    * @param category
    */
-  private buildUrl(category: string): void {
+  private buildUrl (category: string): void {
     this.baseUrl.searchParams.append('action', 'query')
     this.baseUrl.searchParams.append('list', 'categorymembers')
     this.baseUrl.searchParams.append('cmtitle', category)
