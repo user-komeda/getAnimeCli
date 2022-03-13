@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { Command, Flags } from '@oclif/core'
 import { PrismaClient } from '@prisma/client'
 import AnimeTable from '../types/AnimeTable'
