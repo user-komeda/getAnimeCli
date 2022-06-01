@@ -20,7 +20,7 @@
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.1.0",
-    "@prisma/client": "^3.9.1",
+    "@prisma/client": "^3.14.0",
     "@types/axios": "^0.14.0",
     "@types/inquirer": "^8.2.0",
     "@types/jsdom": "^16.2.14",
