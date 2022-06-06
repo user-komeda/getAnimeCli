@@ -1,3 +1,4 @@
+import console = require('console')
 import { JSDOM } from 'jsdom'
 
 /**
@@ -84,8 +85,21 @@ export const wikiTextParseVoiceActor = (
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
  */
-export const wikiTextParseStaff = (text: string): string => {
-  console.log(text)
+export const wikiTextParseStaff = (
+  text: string,
+  sectionIndex: number
+): string => {
+  const element = selectSection(text)[sectionIndex]
+  const staffTableElement = element.nextElementSibling
+  if (staffTableElement) {
+    const tmpStaffList = [...staffTableElement.querySelectorAll('tr td')]
+    const staffList = tmpStaffList.filter(tmpStaff => {
+      return tmpStaff.textContent !== '-' && tmpStaff.textContent !== '-\\n'
+    })
+    for (const staff of staffList) {
+      console.log(staff.textContent)
+    }
+  }
   return ''
 }
 
