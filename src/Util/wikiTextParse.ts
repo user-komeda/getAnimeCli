@@ -109,7 +109,32 @@ export const wikiTextParseStaff = (
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
  */
-export const wikiTextParseSound = (): string => {
+export const wikiTextParseSound = (
+  text: string,
+  sectionIndex: number
+): string => {
+  const element = selectSection(text)[sectionIndex]
+  let whileElement: Element | null = element
+  while (whileElement) {
+    whileElement = whileElement.nextElementSibling
+    if (!whileElement) {
+      break
+    }
+
+    const tagName = whileElement.tagName
+
+    if (tagName === 'H3') {
+      break
+    }
+    console.log(whileElement.tagName)
+    if (tagName === 'DL') {
+      const soundList = whileElement.querySelectorAll('DT')
+      for (const sound of soundList) {
+        console.log(sound.textContent)
+      }
+    }
+  }
+
   return ''
 }
 
