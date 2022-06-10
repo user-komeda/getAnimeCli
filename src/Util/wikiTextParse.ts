@@ -1,5 +1,6 @@
 import console = require('console')
 import { JSDOM } from 'jsdom'
+import EpisodeObject from '../types/EpisodeObject'
 
 /**
  * parseCharacterInfoFromGetResponseData
@@ -126,6 +127,7 @@ export const wikiTextParseSound = (
     if (tagName === 'H3') {
       break
     }
+
     console.log(whileElement.tagName)
     if (tagName === 'DL') {
       const soundList = whileElement.querySelectorAll('DT')
@@ -144,7 +146,36 @@ export const wikiTextParseSound = (
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
  */
-export const wikiTextParseEpisode = (): string => {
+export const wikiTextParseEpisode = (
+  text: string,
+  sectionIndex: number
+): string => {
+  const element = selectSection(text)[sectionIndex]
+  const tableElement = element.nextElementSibling
+  const episodeList: Array<EpisodeObject> = []
+  if (tableElement) {
+    const trElementList = tableElement.querySelectorAll('tr')
+    console.log(trElementList)
+
+    for (const trElement of trElementList) {
+      const tdElement = trElement.querySelectorAll('td')
+      if (!tdElement) {
+        continue
+      }
+
+      const episodeNumber = tdElement[0]?.textContent
+      const episodeTitle = tdElement[1]?.textContent
+      if (episodeNumber && episodeTitle) {
+        const episodeObject: EpisodeObject = {
+          episodeTitle: episodeTitle,
+          episodeNumber: episodeNumber,
+        }
+        episodeList.push(episodeObject)
+      }
+    }
+  }
+
+  console.log(episodeList)
   return ''
 }
 
