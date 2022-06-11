@@ -4,6 +4,7 @@ import EpisodeObject from '../types/EpisodeObject'
 
 /**
  * parseCharacterInfoFromGetResponseData
+ *
  * @param {string} text text
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
@@ -37,7 +38,8 @@ export const wikiTextParseCharacter = (
 }
 
 /**
- * parseCharacterInfoFromGetResponseData
+ * parseVoiceActorInfoFromGetResponseData
+ *
  * @param {string} text text
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
@@ -81,7 +83,8 @@ export const wikiTextParseVoiceActor = (
 }
 
 /**
- * parseCharacterInfoFromGetResponseData
+ * parseStaffInfoFromGetResponseData
+ *
  * @param {string} text text
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
@@ -94,18 +97,20 @@ export const wikiTextParseStaff = (
   const staffTableElement = element.nextElementSibling
   if (staffTableElement) {
     const tmpStaffList = [...staffTableElement.querySelectorAll('tr td')]
-    const staffList = tmpStaffList.filter(tmpStaff => {
+    const staffList = tmpStaffList.filter((tmpStaff) => {
       return tmpStaff.textContent !== '-' && tmpStaff.textContent !== '-\\n'
     })
     for (const staff of staffList) {
       console.log(staff.textContent)
     }
   }
+
   return ''
 }
 
 /**
- * parseCharacterInfoFromGetResponseData
+ * parseSoundInfoFromGetResponseData
+ *
  * @param {string} text text
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
@@ -141,7 +146,8 @@ export const wikiTextParseSound = (
 }
 
 /**
- * parseCharacterInfoFromGetResponseData
+ * parseEpisodeInfoFromGetResponseData
+ *
  * @param {string} text text
  * @param {number} sectionIndex sectionIndex
  * @return {string} text
@@ -181,6 +187,7 @@ export const wikiTextParseEpisode = (
 
 /**
  * page内のテキストから取得したい情報の目次番号を返す
+ *
  * @param {string} pageText pageText
  * @param {string} filterTopic filterTopic
  * @return {string} topicNumber
@@ -217,6 +224,7 @@ export const getTopicNumber = (
 
 /**
  * ページ内テキストから見出しをすべて取得
+ *
  * @param {string} text text
  * @return {Element} Element
  */

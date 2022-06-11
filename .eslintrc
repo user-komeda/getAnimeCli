@@ -6,6 +6,7 @@
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier",
     "google",
+    "plugin:jsdoc/recommended",
     "prettier" // prettierのextendsは最後に記述
   ],
   "plugins": ["@typescript-eslint", "unicorn", "jsdoc"],
@@ -18,20 +19,13 @@
   "rules": {
     "object-curly-spacing": ["off"],
     "unicorn/filename-case": ["off"],
-    "jsdoc/require-jsdoc": [
-      "error",
-      {
-        "publicOnly": true,
-        "require": {
-          "ArrowFunctionExpression": true,
-          "ClassDeclaration": true,
-          "MethodDefinition": true
-        },
-        "checkConstructors": false
-      }
-    ],
-    "jsdoc/require-param-type": 0,
-    "jsdoc/require-returns": 0,
     "require-jsdoc": 2
+  },
+  "settings": {
+    "jsdoc": {
+      "tagNamePreference": {
+        "returns": "return"
+      }
+    }
   }
 }

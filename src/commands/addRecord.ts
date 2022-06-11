@@ -82,7 +82,8 @@ export default class AddRecord extends Command {
 
   /**
    * レコード登録関数
-   * @param dates 登録データ
+   *
+   * @param {Array<AnimeTable>} dates  登録データ
    */
   private async addRecordAnime(dates: Array<AnimeTable>) {
     const prisma = new PrismaClient()
@@ -112,7 +113,8 @@ export default class AddRecord extends Command {
 
   /**
    * animeテーブル登録関数
-   * @param datas
+   *
+   * @param {Array<SoundTable>} datas datas
    */
   private async addRecordSound(datas: Array<SoundTable>) {
     const prisma = new PrismaClient()
@@ -140,7 +142,8 @@ export default class AddRecord extends Command {
 
   /**
    * staffテーブル登録関数
-   * @param datas
+   *
+   * @param {Array<StaffTable>} datas datas
    */
   private async addRecordStaff(datas: Array<StaffTable>) {
     const prisma = new PrismaClient()
@@ -166,7 +169,8 @@ export default class AddRecord extends Command {
 
   /**
    * キャラクタテーブル登録関数
-   * @param datas
+   *
+   * @param {Array<characterTable>} datas datas
    */
   private async addRecordCharacter(datas: Array<characterTable>) {
     const prisma = new PrismaClient()
@@ -191,7 +195,9 @@ export default class AddRecord extends Command {
   }
 
   /**
-   * voiceActorテーブル登録関数
+   * 声優テーブル登録関数
+   *
+   * @param {Array<voiceActorTable>} datas datas
    */
   private async addRecordVoiceActor(datas: Array<voiceActorTable>) {
     const prisma = new PrismaClient()
@@ -219,7 +225,8 @@ export default class AddRecord extends Command {
 
   /**
    * episodeテーブル登録関数
-   * @param datas
+   *
+   * @param {Array<SoundTable>} datas datas
    */
   private async addRecordEpisode(datas: Array<episodeTable>) {
     const prisma = new PrismaClient()
@@ -247,7 +254,9 @@ export default class AddRecord extends Command {
 
   /**
    * 登録したいコンテンツ選択
-   * @param content
+   *
+   * @param {string} content content
+   * @param {Array<SoundTable>} datas datas
    */
   private whichSelectContent(content: string, datas: Array<AnimeTable>) {
     switch (content) {
