@@ -47,6 +47,7 @@ export default class Scrape extends Command {
 
     for (const data of array) {
       this.getScrapeData(baseUrl, data)
+      sleep(5000)
     }
 
     console.log(array)
@@ -54,7 +55,8 @@ export default class Scrape extends Command {
 
   /**
    *
-   * @param baseUrl
+   * @param {string} baseUrl baseUrl
+   * @param {string} data data
    */
   private async getScrapeData(baseUrl: string, data: string | undefined) {
     const response = await axios
@@ -67,7 +69,7 @@ export default class Scrape extends Command {
     const document = dom.window.document
     const test: Element = document.querySelectorAll('.fw-bold+div')[1]
 
-    console.log(test.textContent?.trim())
+    console.log(test.textContent)
     await sleep(5000)
   }
 }

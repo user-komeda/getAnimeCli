@@ -32,6 +32,7 @@
     "csv-writer": "^1.6.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsdoc": "^39.3.2",
     "eslint-plugin-unicorn": "^40.1.0",
     "inquirer": "^8.2.0",
     "jsdom": "^19.0.0",
@@ -87,10 +88,10 @@
     "version": "oclif readme && git add README.md",
     "format": "prettier --write src/**/*",
     "lint-format": "run-s lint format",
-    "scrape":"./bin/dev scrape",
-    "getAnime":"./bin/dev getAnime",
-    "exportCsv":"./bin/dev exportCsv",
-    "addRecord":"./bin/dev addRecord"
+    "scrape": "./bin/dev scrape",
+    "getAnime": "./bin/dev getAnime",
+    "exportCsv": "./bin/dev exportCsv",
+    "addRecord": "./bin/dev addRecord"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -99,7 +100,6 @@
   "keywords": [
     "oclif"
   ],
-
   "lint-staged": {
     "./src/**": [
       "yarn lint",

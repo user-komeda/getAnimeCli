@@ -1,8 +1,10 @@
+import { wikiTextParseEpisode } from './../Util/wikiTextParse'
 import { Command, Flags } from '@oclif/core'
 import * as inquirer from 'inquirer'
 import axios from 'axios'
 import cliUx from 'cli-ux'
 import { sleep } from '../Util/sleep'
+import { getTopicNumber } from '../Util/wikiTextParse'
 
 /**
  * anime取得
@@ -71,26 +73,32 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         this.getAnimeTitles(this.year, this.baseUrl)
         await sleep(10_000)
         break
+
       default:
         break
     }
   }
 
   /**
-   * @param year
-   * @param url
-   * @returns
+   * @param {string} year year
+   * @param {string} url url
+   * @return {string} title
    */
   private getAnimeTitles(year: string, url: URL): string {
+    const test =
+      'https://ja.wikipedia.org/w/api.php?action=parse&pageid=2469435&format=json&prop=text&wrapoutputclass&disablelimitreport&disableeditsection'
     this.log(url.toString())
     axios
-      .get(url.toString())
+      .get(test)
       .then((response) => {
-        const categorymembers = response.data.query.categorymembers
-        this.log(categorymembers.length)
-        for (const categorymember of categorymembers) {
-          this.log(categorymember.title)
-        }
+        const topicNumber = getTopicNumber(
+          JSON.stringify(response.data.parse.text['*']),
+          '各話リスト'
+        )
+        wikiTextParseEpisode(
+          JSON.stringify(response.data.parse.text['*']),
+          topicNumber
+        )
       })
       .catch((error) => {
         this.log(error)
@@ -101,7 +109,8 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
   /**
    * リクエストURLを作成
-   * @param category
+   *
+   * @param {string} category category
    */
   private buildUrl(category: string): void {
     this.baseUrl.searchParams.append('action', 'query')
