@@ -82,7 +82,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   /**
    * @param {string} year year
    * @param {string} url url
-   * @return {string} title
+   * @return {string} titlelyiiy
    */
   private getAnimeTitles(year: string, url: URL): string {
     const test =
