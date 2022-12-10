@@ -3,6 +3,7 @@ import { BASE_URL_JA } from '../const'
 import axios from 'axios'
 import getCharacterList from '../Util/getCharacterList'
 import getEpisodes from '../Util/getEpisode'
+import getVoiceActor from '../Util/getVoiceActor'
 
 /**
  * anime取得
@@ -36,6 +37,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         const parseText = response.data.parse.text['*']
         getCharacterList(parseText, '登場人物[編集]')
         getEpisodes(parseText, '各話リスト[編集]')
+        getVoiceActor(parseText, '登場人物[編集]')
       })
       .catch((error) => {
         console.log(error.message)
