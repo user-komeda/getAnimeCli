@@ -37,13 +37,13 @@ export default class Scrape extends Command {
     const response: AxiosResponse<string, string> = await axios.get(url)
     const html: string = response.data
     const dom: JSDOM = new JSDOM(html)
-    const document: Document = dom.window.document
+    const { document } = dom.window
     const test: NodeListOf<Element> = document.querySelectorAll(
       '.table > tbody > tr >td > a'
     )
-    const array: (string | undefined)[] = [...test].map((test) => {
-      return test.textContent?.trim()
-    })
+    const array: (string | undefined)[] = [...test].map((test) =>
+      test.textContent?.trim()
+    )
 
     for (const data of array) {
       this.getScrapeData(baseUrl, data)
@@ -61,12 +61,10 @@ export default class Scrape extends Command {
   private async getScrapeData(baseUrl: string, data: string | undefined) {
     const response = await axios
       .get(baseUrl + 'works/' + data + '/info')
-      .then((response) => {
-        return response
-      })
+      .then((response) => response)
     const html: string = response.data
     const dom: JSDOM = new JSDOM(html)
-    const document = dom.window.document
+    const { document } = dom.window
     const test: Element = document.querySelectorAll('.fw-bold+div')[1]
 
     console.log(test.textContent)
