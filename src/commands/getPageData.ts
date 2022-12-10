@@ -1,7 +1,9 @@
 import { Command, Flags } from '@oclif/core'
 import { BASE_URL_JA } from '../const'
 import axios from 'axios'
-import createPageDataFile from '../Util/createPageDataFile'
+import getCharacterList from '../Util/getCharacterList'
+import getEpisodes from '../Util/getEpisode'
+
 /**
  * anime取得
  */
@@ -32,7 +34,8 @@ hello friend from oclif! (./src/commands/hello/index.ts)
       .get(requestUrl)
       .then((response) => {
         const parseText = response.data.parse.text['*']
-        createPageDataFile(parseText)
+        getCharacterList(parseText, '登場人物[編集]')
+        getEpisodes(parseText, '各話リスト[編集]')
       })
       .catch((error) => {
         console.log(error.message)
