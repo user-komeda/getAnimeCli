@@ -90,7 +90,6 @@
     "getAnime": "./bin/dev getAnime",
     "exportCsv": "./bin/dev exportCsv",
     "addRecord": "./bin/dev addRecord",
-    "getEpisode": "./bin/dev getEpisode",
     "getPageData": "./bin/dev getPageData"
   },
   "engines": {

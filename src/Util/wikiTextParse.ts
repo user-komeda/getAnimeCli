@@ -3,39 +3,50 @@ import { JSDOM } from 'jsdom'
 import EpisodeObject from '../types/EpisodeObject'
 
 /**
- * parseCharacterInfoFromGetResponseData
+ * characterList取得
  *
  * @param {string} text text
- * @param {number} sectionIndex sectionIndex
+ * @param {string} content content
  * @return {string} text
  */
-// export const wikiTextParseCharacter = (
-//   text: string,
-//   sectionIndex: number
-// ): string => {
-//   const element = selectSection(text)[sectionIndex]
-//   let whileElement: Element | null = element
-//   while (whileElement) {
-//     whileElement = whileElement.nextElementSibling
-//     if (!whileElement) {
-//       break
-//     }
+export const wikiTextParseCharacter = (
+  text: string,
+  content: string
+): string => {
+  const elementList = selectSection(
+    text.replace(/<style(\s|>).*?<\/style>/gi, '')
+  )
+  let searchIndex = 0
+  for (const [index, element] of elementList.entries()) {
+    if (element.textContent === content) {
+      searchIndex = index
+    } else {
+      console.log(element.textContent)
+    }
+  }
 
-//     const tagName = whileElement.tagName
-//     if (tagName === 'H2') {
-//       break
-//     }
+  let whileElement: Element | null = elementList[searchIndex]
+  while (whileElement) {
+    whileElement = whileElement.nextElementSibling
+    if (!whileElement) {
+      break
+    }
 
-//     if (tagName === 'DL') {
-//       const characterList = whileElement.querySelectorAll('dt')
-//       for (const character of characterList) {
-//         console.log(character)
-//       }
-//     }
-//   }
+    const tagName = whileElement.tagName
+    if (tagName === 'H2') {
+      break
+    }
 
-//   return ''
-// }
+    if (tagName === 'DL') {
+      const characterList = whileElement.querySelectorAll('dt')
+      for (const character of characterList) {
+        console.log(character.textContent)
+      }
+    }
+  }
+
+  return ''
+}
 
 /**
  * parseVoiceActorInfoFromGetResponseData
@@ -147,7 +158,10 @@ import EpisodeObject from '../types/EpisodeObject'
  * @param {string} content content
  * @return {string} text
  */
-export const wikiTextParseEpisode = (text: string, content: string): string => {
+export const wikiTextParseEpisode = (
+  text: string,
+  content: string
+): Array<EpisodeObject> => {
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -185,7 +199,7 @@ export const wikiTextParseEpisode = (text: string, content: string): string => {
   }
 
   console.log(episodeList)
-  return ''
+  return episodeList
 }
 
 /**
