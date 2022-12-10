@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "description": "oclif example Hello World CLI",
   "author": "user_komeda @user-komeda",
-  "bin": {
-    "test": "./bin/run"
-  },
+  "bin": "./bin/run",
   "homepage": "https://github.com/user-komeda/hello-world",
   "license": "MIT",
   "main": "dist/index.js",
@@ -23,7 +21,7 @@
     "@prisma/client": "^3.9.1",
     "@types/axios": "^0.14.0",
     "@types/inquirer": "^8.2.0",
-    "@types/jsdom": "^16.2.14",
+    "@types/jsdom": "^20.0.1",
     "@types/node-fetch": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
@@ -35,7 +33,7 @@
     "eslint-plugin-jsdoc": "^39.3.2",
     "eslint-plugin-unicorn": "^40.1.0",
     "inquirer": "^8.2.0",
-    "jsdom": "^19.0.0",
+    "jsdom": "^20.0.3",
     "node-fetch": "^3.2.0",
     "prettier": "^2.5.1",
     "prisma": "^3.9.1"
@@ -80,7 +78,7 @@
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
-    "lint": "eslint . --ext .ts --config .eslintrc ",
+    "lint": "eslint . --ext .ts --config .eslintrc --fix",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest && oclif readme",
@@ -91,7 +89,8 @@
     "scrape": "./bin/dev scrape",
     "getAnime": "./bin/dev getAnime",
     "exportCsv": "./bin/dev exportCsv",
-    "addRecord": "./bin/dev addRecord"
+    "addRecord": "./bin/dev addRecord",
+    "getEpisode":"./bin/dev getEpisode"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -101,7 +100,7 @@
     "oclif"
   ],
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "./src/**": [
       "yarn lint",
       "yarn format"
     ]

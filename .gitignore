@@ -16,3 +16,5 @@ node_modules
 oclif.manifest.json
 .env
 tsconfig.tsbuildinfo
+.yarn/
+yarn.lock

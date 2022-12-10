@@ -1,10 +1,9 @@
-import { wikiTextParseEpisode } from './../Util/wikiTextParse'
 import { Command, Flags } from '@oclif/core'
 import * as inquirer from 'inquirer'
 import axios from 'axios'
 import cliUx from 'cli-ux'
 import { sleep } from '../Util/sleep'
-import { getTopicNumber } from '../Util/wikiTextParse'
+import { BASE_URL_JA } from '../const'
 
 /**
  * anime取得
@@ -12,7 +11,7 @@ import { getTopicNumber } from '../Util/wikiTextParse'
 export default class GetAnime extends Command {
   static description = 'Say hello'
 
-  private baseUrl: URL = new URL('https://ja.wikipedia.org/w/api.php?')
+  private baseUrl: URL = new URL(BASE_URL_JA)
   private year = ''
   static examples = [
     `$ oex hello friend --from oclif
@@ -52,25 +51,25 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         this.log('anime')
         category = `Category:${this.year}年のテレビアニメ`
         this.buildUrl(category)
-        this.getAnimeTitles(this.year, this.baseUrl)
+        this.getAnimeData(this.baseUrl)
         await sleep(10_000)
 
         this.log('web')
         category = 'Category:2020年のWebアニメ'
         this.buildUrl(category)
-        this.getAnimeTitles(this.year, this.baseUrl)
+        this.getAnimeData(this.baseUrl)
         await sleep(10_000)
 
         this.log('movie')
         category = `Category:${this.year}年のアニメ映画`
         this.buildUrl(category)
-        this.getAnimeTitles(this.year, this.baseUrl)
+        this.getAnimeData(this.baseUrl)
         await sleep(10_000)
 
         this.log('ova')
         category = `Category:${this.year}年のOVA`
         this.buildUrl(category)
-        this.getAnimeTitles(this.year, this.baseUrl)
+        this.getAnimeData(this.baseUrl)
         await sleep(10_000)
         break
 
@@ -80,25 +79,20 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   }
 
   /**
-   * @param {string} year year
    * @param {string} url url
    * @return {string} titlelyiiy
    */
-  private getAnimeTitles(year: string, url: URL): string {
-    const test =
-      'https://ja.wikipedia.org/w/api.php?action=parse&pageid=2469435&format=json&prop=text&wrapoutputclass&disablelimitreport&disableeditsection'
+  private getAnimeData(url: URL): string {
     this.log(url.toString())
     axios
-      .get(test)
+      .get(url.toString())
       .then((response) => {
-        const topicNumber = getTopicNumber(
-          JSON.stringify(response.data.parse.text['*']),
-          '各話リスト'
-        )
-        wikiTextParseEpisode(
-          JSON.stringify(response.data.parse.text['*']),
-          topicNumber
-        )
+        const { categorymembers } = response.data.query
+        this.log(categorymembers.length)
+        for (const categorymember of categorymembers) {
+          this.log(categorymember.title)
+          this.log(categorymember.pageid)
+        }
       })
       .catch((error) => {
         this.log(error)
@@ -106,6 +100,8 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
     return ''
   }
+
+  // private getPageId(page: number): string
 
   /**
    * リクエストURLを作成
