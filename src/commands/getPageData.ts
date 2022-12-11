@@ -5,6 +5,7 @@ import getCharacterList from '../Util/getCharacterList'
 import getEpisodes from '../Util/getEpisode'
 import getVoiceActor from '../Util/getVoiceActor'
 import getStaffList from '../Util/getStaffList'
+import getSound from '../Util/getSound'
 
 /**
  * anime取得
@@ -40,6 +41,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         getEpisodes(parseText, '各話リスト[編集]')
         getVoiceActor(parseText, '登場人物[編集]')
         getStaffList(parseText, 'スタッフ[編集]')
+        getSound(parseText, '主題歌[編集]')
       })
       .catch((error) => {
         console.log(error.message)

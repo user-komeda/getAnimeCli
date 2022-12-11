@@ -134,36 +134,46 @@ export const wikiTextParseStaff = (text: string, content: string): string => {
  * parseSoundInfoFromGetResponseData
  *
  * @param {string} text text
- * @param {number} sectionIndex sectionIndex
+ * @param {string} content content
  * @return {string} text
  */
-// export const wikiTextParseSound = (
-//   text: string,
-//   sectionIndex: number
-// ): string => {
-//   const element = selectSection(text)[sectionIndex]
-//   let whileElement: Element | null = element
-//   while (whileElement) {
-//     whileElement = whileElement.nextElementSibling
-//     if (!whileElement) {
-//       break
-//     }
+export const wikiTextParseSound = (text: string, content: string): string => {
+  const elementList = selectSection(
+    text.replace(/<style(\s|>).*?<\/style>/gi, '')
+  )
+  let searchIndex = 0
+  for (const [index, element] of elementList.entries()) {
+    if (element.textContent === content) {
+      searchIndex = index
+    } else {
+      console.log(element.textContent)
+    }
+  }
 
-//     const tagName = whileElement.tagName
+  let whileElement: Element | null = elementList[searchIndex]
 
-//     if (tagName === 'H3') {
-//       break
-//     }
+  while (whileElement) {
+    whileElement = whileElement.nextElementSibling
+    if (!whileElement) {
+      break
+    }
 
-//     if (tagName === 'DL') {
-//       const soundList = whileElement.querySelectorAll('DT')
-//       for (const sound of soundList) {
-//       }
-//     }
-//   }
+    const tagName = whileElement.tagName
 
-//   return ''
-// }
+    if (tagName === 'H3') {
+      break
+    }
+
+    if (tagName === 'DL') {
+      const soundList = whileElement.querySelectorAll('DT')
+      for (const sound of soundList) {
+        console.log(sound.textContent)
+      }
+    }
+  }
+
+  return ''
+}
 
 /**
  * parseEpisodeInfoFromGetResponseData
