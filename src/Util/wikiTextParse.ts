@@ -102,26 +102,33 @@ export const wikiTextParseVoiceActor = (
  * parseStaffInfoFromGetResponseData
  *
  * @param {string} text text
- * @param {number} sectionIndex sectionIndex
+ * @param {string} content context
  * @return {string} text
  */
-// export const wikiTextParseStaff = (
-//   text: string,
-//   sectionIndex: number
-// ): string => {
-//   const element = selectSection(text)[sectionIndex]
-//   const staffTableElement = element.nextElementSibling
-//   if (staffTableElement) {
-//     const tmpStaffList = [...staffTableElement.querySelectorAll('tr td')]
-//     const staffList = tmpStaffList.filter(tmpStaff => {
-//       return tmpStaff.textContent !== '-' && tmpStaff.textContent !== '-\\n'
-//     })
-//     for (const staff of staffList) {
-//     }
-//   }
+export const wikiTextParseStaff = (text: string, content: string): string => {
+  const elementList = selectSection(
+    text.replace(/<style(\s|>).*?<\/style>/gi, '')
+  )
+  let searchIndex = 0
+  for (const [index, element] of elementList.entries()) {
+    if (element.textContent === content) {
+      searchIndex = index
+    } else {
+      console.log(element.textContent)
+    }
+  }
 
-//   return ''
-// }
+  console.log(searchIndex)
+  const ulElement = elementList[searchIndex].nextElementSibling
+  const liElementList = ulElement?.querySelectorAll('li')
+  if (liElementList) {
+    for (const liElement of liElementList) {
+      console.log(liElement.textContent)
+    }
+  }
+
+  return ''
+}
 
 /**
  * parseSoundInfoFromGetResponseData
