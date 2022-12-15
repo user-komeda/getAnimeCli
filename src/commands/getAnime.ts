@@ -4,6 +4,8 @@ import axios from 'axios'
 import cliUx from 'cli-ux'
 import { sleep } from '../Util/sleep'
 import { BASE_URL_JA } from '../const'
+import getPageData from '../Util/getPageData'
+import exportCsv from '../Util/exportCsv'
 
 /**
  * anime取得
@@ -82,17 +84,18 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * @param {string} url url
    * @return {string} titlelyiiy
    */
-  private getAnimeData(url: URL): string {
+  private async getAnimeData(url: URL): Promise<string> {
     this.log(url.toString())
     axios
       .get(url.toString())
-      .then((response) => {
+      .then(async (response) => {
         const { categorymembers } = response.data.query
-        this.log(categorymembers.length)
         for (const categorymember of categorymembers) {
-          this.log(categorymember.title)
-          this.log(categorymember.pageid)
+          console.log(categorymember.pageid)
+          getPageData(categorymember.pageid)
         }
+
+        exportCsv()
       })
       .catch((error) => {
         this.log(error)

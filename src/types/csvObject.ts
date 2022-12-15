@@ -1,4 +1,10 @@
 export default interface csvObject {
   id: number
-  name: string
+  title: string
+  enTitle: string
+  episode: string
+  staff: string
+  character: string
+  sound: string
+  voiceActor: string
 }
