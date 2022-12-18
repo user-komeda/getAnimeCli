@@ -18,10 +18,6 @@ const exportCsv = (datas: Array<csvObject>) => {
     'voiceActor',
   ]
 
-  // csvBodyのデータ
-  const csvObject: Array<csvObject> = []
-  datas.sort()
-
   // csv書き込み設定
   const writer = csvWriter.createObjectCsvWriter({
     path: 'c://Users/user/Downloads/test1.csv',
@@ -31,17 +27,10 @@ const exportCsv = (datas: Array<csvObject>) => {
   })
 
   // csvBodyにデータを追加
-  for (const [index, data] of dates.entries()) {
-    const rowData: csvObject = {
-      id: index,
-      name: data,
-    }
-    csvObject.push(rowData)
-  }
 
   // csvを書き込み
   writer
-    .writeRecords(csvObject)
+    .writeRecords(datas)
     .then(() => {
       console.log('success')
     })

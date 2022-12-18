@@ -5,38 +5,54 @@ import getEpisodes from './getEpisode'
 import getVoiceActor from './getVoiceActor'
 import getStaffList from './getStaffList'
 import getSound from './getSound'
-import { sleep } from '../Util/sleep'
+import csvObject from '../types/csvObject'
 
 /**
  *
  * @param {string} pageId pageId
+ * @param {string} title title
  */
-const getPageData = (pageId: string) => {
+const getPageData = async (
+  pageId: string,
+  title: string
+): Promise<csvObject> => {
   const baseUrl: URL = new URL(BASE_URL_JA)
-
+  const csvObject: csvObject = {
+    id: '',
+    title: '',
+    enTitle: '',
+    episode: '',
+    staff: '',
+    character: '',
+    sound: '',
+    voiceActor: '',
+  }
   /**
    * メイン処理
    */
 
   const requestUrl = convertPageIdToUrl(baseUrl, pageId)
-  axios
+  await axios
     .get(requestUrl)
-    .then(async (response) => {
+    .then((response) => {
       const parseText = response.data.parse.text['*']
-      getCharacterList(parseText, '登場人物[編集]')
-      sleep(2000)
-      getEpisodes(parseText, '各話リスト[編集]')
-      sleep(2000)
-      getVoiceActor(parseText, '登場人物[編集]')
-      sleep(2000)
-      getStaffList(parseText, 'スタッフ[編集]')
-      sleep(2000)
-      getSound(parseText, '主題歌[編集]')
-      sleep(2000)
+      const character = getCharacterList(parseText, '登場人物[編集]')
+      const episode = getEpisodes(parseText, '各話リスト[編集]')
+      const voiceActor = getVoiceActor(parseText, '登場人物[編集]')
+      const staff = getStaffList(parseText, 'スタッフ[編集]')
+      const sound = getSound(parseText, '主題歌[編集]')
+      csvObject.id = pageId
+      csvObject.title = title
+      csvObject.character = character
+      csvObject.episode = episode
+      csvObject.voiceActor = voiceActor
+      csvObject.staff = staff
+      csvObject.sound = sound
     })
     .catch((error) => {
       console.log(error.message)
     })
+  return csvObject
 }
 
 /**

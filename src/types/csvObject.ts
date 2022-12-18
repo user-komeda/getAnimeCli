@@ -1,5 +1,5 @@
 export default interface csvObject {
-  id: number
+  id: string
   title: string
   enTitle: string
   episode: string

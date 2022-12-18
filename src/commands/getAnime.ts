@@ -6,6 +6,7 @@ import { sleep } from '../Util/sleep'
 import { BASE_URL_JA } from '../const'
 import getPageData from '../Util/getPageData'
 import exportCsv from '../Util/exportCsv'
+import csvObject from '../types/csvObject'
 
 /**
  * anime取得
@@ -56,23 +57,23 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         this.getAnimeData(this.baseUrl)
         await sleep(10_000)
 
-        this.log('web')
-        category = 'Category:2020年のWebアニメ'
-        this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        // this.log('web')
+        // category = 'Category:2020年のWebアニメ'
+        // this.buildUrl(category)
+        // this.getAnimeData(this.baseUrl)
+        // await sleep(10_000)
 
-        this.log('movie')
-        category = `Category:${this.year}年のアニメ映画`
-        this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        // this.log('movie')
+        // category = `Category:${this.year}年のアニメ映画`
+        // this.buildUrl(category)
+        // this.getAnimeData(this.baseUrl)
+        // await sleep(10_000)
 
-        this.log('ova')
-        category = `Category:${this.year}年のOVA`
-        this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        // this.log('ova')
+        // category = `Category:${this.year}年のOVA`
+        // this.buildUrl(category)
+        // this.getAnimeData(this.baseUrl)
+        // await sleep(10_000)
         break
 
       default:
@@ -84,18 +85,27 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * @param {string} url url
    * @return {string} titlelyiiy
    */
-  private async getAnimeData(url: URL): Promise<string> {
+  private getAnimeData(url: URL): string {
     this.log(url.toString())
+    const csvObjectList: Array<csvObject> = []
     axios
       .get(url.toString())
       .then(async (response) => {
         const { categorymembers } = response.data.query
+        // eslint-disable-next-line no-unreachable-loop
         for (const categorymember of categorymembers) {
-          console.log(categorymember.pageid)
-          getPageData(categorymember.pageid)
+          console.log(categorymember)
+          // eslint-disable-next-line no-await-in-loop
+          const csvObject = await getPageData(
+            categorymember.pageid,
+            categorymember.title
+          )
+          csvObjectList.push(csvObject)
+          exportCsv(csvObjectList)
+          break
         }
 
-        exportCsv()
+        // exportCsv()
       })
       .catch((error) => {
         this.log(error)
