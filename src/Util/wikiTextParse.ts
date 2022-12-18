@@ -1,4 +1,3 @@
-import console = require('console')
 import { JSDOM } from 'jsdom'
 import EpisodeObject from '../types/EpisodeObject'
 
@@ -17,11 +16,10 @@ export const wikiTextParseCharacter = (
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
   let searchIndex = 0
+
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -39,9 +37,12 @@ export const wikiTextParseCharacter = (
 
     if (tagName === 'DL') {
       const characterList = whileElement.querySelectorAll('dt')
+      const characterName = []
       for (const character of characterList) {
-        console.log(character.textContent)
+        characterName.push(character.textContent)
       }
+
+      return characterName.join(',')
     }
   }
 
@@ -66,8 +67,6 @@ export const wikiTextParseVoiceActor = (
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -85,13 +84,15 @@ export const wikiTextParseVoiceActor = (
 
     if (tagName === 'DL') {
       const characterList = whileElement.querySelectorAll('dt')
+      const voiceActorList = []
       for (const character of characterList) {
         const voiceActor = character.nextElementSibling?.textContent ?? ''
         if (voiceActor[0] === '声') {
-          console.log(character.textContent)
-          console.log(character.nextElementSibling?.textContent)
+          voiceActorList.push(character.nextElementSibling?.textContent)
         }
       }
+
+      return voiceActorList.join(',')
     }
   }
 
@@ -113,21 +114,19 @@ export const wikiTextParseStaff = (text: string, content: string): string => {
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
-  console.log(searchIndex)
   const ulElement = elementList[searchIndex].nextElementSibling
   const liElementList = ulElement?.querySelectorAll('li')
+  const staffList = []
   if (liElementList) {
     for (const liElement of liElementList) {
-      console.log(liElement.textContent)
+      staffList.push(liElement.textContent)
     }
   }
 
-  return ''
+  return staffList.join(',')
 }
 
 /**
@@ -145,8 +144,6 @@ export const wikiTextParseSound = (text: string, content: string): string => {
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -166,9 +163,12 @@ export const wikiTextParseSound = (text: string, content: string): string => {
 
     if (tagName === 'DL') {
       const soundList = whileElement.querySelectorAll('DT')
+      const SoundListString = []
       for (const sound of soundList) {
-        console.log(sound.textContent)
+        SoundListString.push(sound.textContent)
       }
+
+      return SoundListString.join(',')
     }
   }
 
@@ -182,10 +182,7 @@ export const wikiTextParseSound = (text: string, content: string): string => {
  * @param {string} content content
  * @return {string} text
  */
-export const wikiTextParseEpisode = (
-  text: string,
-  content: string
-): Array<EpisodeObject> => {
+export const wikiTextParseEpisode = (text: string, content: string): string => {
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -193,12 +190,9 @@ export const wikiTextParseEpisode = (
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
-  console.log(searchIndex)
   const tableElement = elementList[searchIndex].nextElementSibling
   const episodeList: Array<EpisodeObject> = []
   if (tableElement) {
@@ -222,8 +216,11 @@ export const wikiTextParseEpisode = (
     }
   }
 
-  console.log(episodeList)
-  return episodeList
+  const episodeListString = episodeList.map((episode) => {
+    return episode.episodeNumber + ':' + episode.episodeTitle
+  })
+
+  return episodeListString.join('')
 }
 
 /**

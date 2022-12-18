@@ -8,7 +8,7 @@ import { wikiTextParseEpisode } from './wikiTextParse'
  * @param {string} content context
  * @return {Array<EpisodeObject>} episodeList
  */
-const getEpisodes = (text: string, content: string): Array<EpisodeObject> => {
+const getEpisodes = (text: string, content: string): string => {
   return wikiTextParseEpisode(text, content)
 }
 
