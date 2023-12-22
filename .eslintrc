@@ -1,7 +1,5 @@
 {
   "extends": [
-    "oclif",
-    "oclif-typescript",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier",
@@ -9,7 +7,7 @@
     "plugin:jsdoc/recommended",
     "prettier" // prettierのextendsは最後に記述
   ],
-  "plugins": ["@typescript-eslint", "unicorn", "jsdoc"],
+  "plugins": ["@typescript-eslint", "jsdoc"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",

@@ -1,6 +1,6 @@
-import console = require('console')
 import { JSDOM } from 'jsdom'
 import EpisodeObject from '../types/EpisodeObject'
+import voiceActorObject from 'src/types/VoiceActorObject'
 
 /**
  * characterList取得
@@ -12,7 +12,8 @@ import EpisodeObject from '../types/EpisodeObject'
 export const wikiTextParseCharacter = (
   text: string,
   content: string
-): string => {
+): Array<string> => {
+  const characterListData: Array<string> = []
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -20,8 +21,6 @@ export const wikiTextParseCharacter = (
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -40,12 +39,12 @@ export const wikiTextParseCharacter = (
     if (tagName === 'DL') {
       const characterList = whileElement.querySelectorAll('dt')
       for (const character of characterList) {
-        console.log(character.textContent)
+        characterListData.push(character.textContent ?? '')
       }
     }
   }
 
-  return ''
+  return characterListData
 }
 
 /**
@@ -58,7 +57,8 @@ export const wikiTextParseCharacter = (
 export const wikiTextParseVoiceActor = (
   text: string,
   content: string
-): string => {
+): Array<voiceActorObject> => {
+  const voiceActorList: Array<voiceActorObject> = []
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -66,8 +66,6 @@ export const wikiTextParseVoiceActor = (
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -88,14 +86,17 @@ export const wikiTextParseVoiceActor = (
       for (const character of characterList) {
         const voiceActor = character.nextElementSibling?.textContent ?? ''
         if (voiceActor[0] === '声') {
-          console.log(character.textContent)
-          console.log(character.nextElementSibling?.textContent)
+          const voiceActor: voiceActorObject = {
+            characterName: character.textContent ?? '',
+            voiceActorName: character.nextElementSibling?.textContent ?? '',
+          }
+          voiceActorList.push(voiceActor)
         }
       }
     }
   }
 
-  return ''
+  return voiceActorList
 }
 
 /**
@@ -105,7 +106,11 @@ export const wikiTextParseVoiceActor = (
  * @param {string} content context
  * @return {string} text
  */
-export const wikiTextParseStaff = (text: string, content: string): string => {
+export const wikiTextParseStaff = (
+  text: string,
+  content: string
+): Array<string> => {
+  const staffList: Array<string> = []
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -113,21 +118,18 @@ export const wikiTextParseStaff = (text: string, content: string): string => {
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
-  console.log(searchIndex)
-  const ulElement = elementList[searchIndex].nextElementSibling
+  const ulElement = elementList[searchIndex]?.nextElementSibling
   const liElementList = ulElement?.querySelectorAll('li')
   if (liElementList) {
     for (const liElement of liElementList) {
-      console.log(liElement.textContent)
+      staffList.push(liElement.textContent ?? '')
     }
   }
 
-  return ''
+  return staffList
 }
 
 /**
@@ -137,7 +139,11 @@ export const wikiTextParseStaff = (text: string, content: string): string => {
  * @param {string} content content
  * @return {string} text
  */
-export const wikiTextParseSound = (text: string, content: string): string => {
+export const wikiTextParseSound = (
+  text: string,
+  content: string
+): Array<string> => {
+  const soundListData: Array<string> = []
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
@@ -145,8 +151,6 @@ export const wikiTextParseSound = (text: string, content: string): string => {
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
 
@@ -167,12 +171,12 @@ export const wikiTextParseSound = (text: string, content: string): string => {
     if (tagName === 'DL') {
       const soundList = whileElement.querySelectorAll('DT')
       for (const sound of soundList) {
-        console.log(sound.textContent)
+        soundListData.push(sound.textContent ?? '')
       }
     }
   }
 
-  return ''
+  return soundListData
 }
 
 /**
@@ -193,13 +197,9 @@ export const wikiTextParseEpisode = (
   for (const [index, element] of elementList.entries()) {
     if (element.textContent === content) {
       searchIndex = index
-    } else {
-      console.log(element.textContent)
     }
   }
-
-  console.log(searchIndex)
-  const tableElement = elementList[searchIndex].nextElementSibling
+  const tableElement = elementList[searchIndex]?.nextElementSibling
   const episodeList: Array<EpisodeObject> = []
   if (tableElement) {
     const trElementList = tableElement.querySelectorAll('tr')
@@ -221,8 +221,6 @@ export const wikiTextParseEpisode = (
       }
     }
   }
-
-  console.log(episodeList)
   return episodeList
 }
 
@@ -235,5 +233,5 @@ export const wikiTextParseEpisode = (
 const selectSection = (text: string): NodeListOf<Element> => {
   const dom = new JSDOM(text)
   const { document } = dom.window
-  return document.querySelectorAll('h2,h3,h4,h5,h6')
+  return document.querySelectorAll('h1,h2,h3,h4,h5,h6')
 }
