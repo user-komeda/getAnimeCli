@@ -4,6 +4,10 @@ import axios from 'axios'
 import cliUx from 'cli-ux'
 import { sleep } from '../Util/sleep'
 import { BASE_URL_JA } from '../const'
+import getPageData from '../Util/getPageData'
+import AnimeData from 'src/types/AnimeData'
+import * as fs from 'fs'
+import path = require('path')
 
 /**
  * anime取得
@@ -47,30 +51,50 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
     switch (stage) {
       case 'title':
+        console.time('a')
         this.year = await cliUx.prompt('Please enter the year you want to get')
         this.log('anime')
         category = `Category:${this.year}年のテレビアニメ`
         this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        fs.writeFileSync(
+          path.join(process.cwd(), 'dist', 'tvAnime.json'),
+          JSON.stringify(await this.getAnimeData(this.baseUrl))
+        )
+        console.timeEnd('a')
+        await sleep(3_000)
 
+        console.time('b')
         this.log('web')
-        category = 'Category:2020年のWebアニメ'
+        category = `Category:${this.year}年のWebアニメ`
         this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        fs.writeFileSync(
+          path.join(process.cwd(), 'dist', 'webAnime.json'),
+          JSON.stringify(await this.getAnimeData(this.baseUrl))
+        )
+        console.timeEnd('b')
+        await sleep(3_000)
 
+        console.time('c')
         this.log('movie')
         category = `Category:${this.year}年のアニメ映画`
         this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        fs.writeFileSync(
+          path.join(process.cwd(), 'dist', 'movieAnime.json'),
+          JSON.stringify(await this.getAnimeData(this.baseUrl))
+        )
+        console.timeEnd('c')
+        await sleep(3_000)
 
+        console.time('d')
         this.log('ova')
         category = `Category:${this.year}年のOVA`
         this.buildUrl(category)
-        this.getAnimeData(this.baseUrl)
-        await sleep(10_000)
+        fs.writeFileSync(
+          path.join(process.cwd(), 'dist', 'ovaAnime.json'),
+          JSON.stringify(await this.getAnimeData(this.baseUrl))
+        )
+        console.timeEnd('d')
+        await sleep(3_000)
         break
 
       default:
@@ -82,23 +106,18 @@ hello friend from oclif! (./src/commands/hello/index.ts)
    * @param {string} url url
    * @return {string} titlelyiiy
    */
-  private getAnimeData(url: URL): string {
-    this.log(url.toString())
-    axios
-      .get(url.toString())
-      .then((response) => {
-        const { categorymembers } = response.data.query
-        this.log(categorymembers.length)
-        for (const categorymember of categorymembers) {
-          this.log(categorymember.title)
-          this.log(categorymember.pageid)
+  private async getAnimeData(url: URL): Promise<AnimeData[]> {
+    const animeDataList: Array<AnimeData> = []
+    await axios.get(url.toString()).then(async (response) => {
+      const { categorymembers } = response.data.query
+      for (const categorymember of categorymembers) {
+        const pageData = await getPageData(categorymember.pageid)
+        if (pageData !== null) {
+          animeDataList.push(pageData)
         }
-      })
-      .catch((error) => {
-        this.log(error)
-      })
-
-    return ''
+      }
+    })
+    return animeDataList
   }
 
   // private getPageId(page: number): string
