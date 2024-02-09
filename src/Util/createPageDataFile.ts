@@ -4,6 +4,7 @@ const createPageDataFile = (text: string) => {
     'C://Users/user/Desktop/learning/oclif/animecli/out/PageData.txt',
     text
   )
+  console.log('aaa')
 }
 
 export default createPageDataFile
