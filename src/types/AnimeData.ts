@@ -4,6 +4,7 @@ import voiceActorObject from './VoiceActorObject'
 export default interface AnimeData {
   pageId: string
   title: string
+  televisedBroadcastDate: string
   characterList: Array<string>
   episodeList: Array<EpisodeObject>
   soundList: Array<string>

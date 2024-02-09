@@ -225,13 +225,54 @@ export const wikiTextParseEpisode = (
 }
 
 /**
+ * parseTelevisedBroadcastDate
+ *
+ * @param {string} text text
+ * @param {Array<String>} content content
+ * @return {string} text
+ */
+export const wikiTextParseTelevisedBroadcastDate = (
+  text: string,
+  content: Array<string>
+): string => {
+  const replacedText = text.replace(/<style(\s|>).*?<\/style>/gi, '')
+  const document = convertTextToDom(replacedText)
+  try {
+    const firstTableElement =
+      document.querySelector('table.infobox') ??
+      (() => {
+        throw new Error()
+      })()
+
+    const thElementList = firstTableElement.querySelectorAll('th')
+    const findElement = Array.from(thElementList).find((thElement) => {
+      return content.includes(
+        thElement.textContent?.replace(/\r?\n/g, '') ?? ''
+      )
+    })
+    const matchedElement = findElement?.nextElementSibling?.textContent?.match(
+      /[0-9]{4}年([1-9]|0[1-9]|1[0-2])月([1-9]|0[1-9]|[12][0-9]|3[01])日/g
+    )
+    return matchedElement ? matchedElement[0] : ''
+  } catch (error) {
+    console.error(error)
+    return ''
+  }
+}
+
+/**
  * ページ内テキストから見出しをすべて取得
  *
  * @param {string} text text
  * @return {Element} Element
  */
 const selectSection = (text: string): NodeListOf<Element> => {
+  const document = convertTextToDom(text)
+  return document.querySelectorAll('h1,h2,h3,h4,h5,h6')
+}
+
+const convertTextToDom = (text: string): Document => {
   const dom = new JSDOM(text)
   const { document } = dom.window
-  return document.querySelectorAll('h1,h2,h3,h4,h5,h6')
+  return document
 }
