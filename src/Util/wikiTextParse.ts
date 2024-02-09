@@ -228,7 +228,7 @@ export const wikiTextParseEpisode = (
  * parseTelevisedBroadcastDate
  *
  * @param {string} text text
- * @param {Array<String>} content content
+ * @param {Array<string>} content content
  * @return {string} text
  */
 export const wikiTextParseTelevisedBroadcastDate = (
