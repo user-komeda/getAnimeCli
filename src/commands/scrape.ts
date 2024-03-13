@@ -1,4 +1,4 @@
-import { sleep } from './../Util/sleep'
+import { sleep } from '@utils/sleep'
 import { Command } from '@oclif/core'
 import axios, { AxiosResponse } from 'axios'
 import { JSDOM } from 'jsdom'

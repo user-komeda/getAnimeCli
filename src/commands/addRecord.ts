@@ -1,12 +1,12 @@
 /* eslint-disable no-await-in-loop */
 import { Command, Flags } from '@oclif/core'
 import { PrismaClient } from '@prisma/client'
-import AnimeTable from '../types/AnimeTable'
-import SoundTable from '../types/SoundTable'
-import StaffTable from '../types/StaffTable'
-import characterTable from '../types/CharacterTable'
-import voiceActorTable from '../types/voiceActorTable'
-import episodeTable from '../types/EpisodeTable'
+import AnimeTable from '@type/AnimeTable'
+import SoundTable from '@type/SoundTable'
+import StaffTable from '@type/StaffTable'
+import characterTable from '@type/CharacterTable'
+import voiceActorTable from '@type/voiceActorTable'
+import episodeTable from '@type/EpisodeTable'
 
 /**
  * データベースにレコードを登録する
@@ -19,8 +19,6 @@ export default class AddRecord extends Command {
   static flags = {
     name: Flags.string({ char: 'n', description: 'name to print' }),
   }
-
-  static args = [{ name: 'data' }]
 
   /**
    * メイン処理

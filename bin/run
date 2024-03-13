@@ -1,5 +1,17 @@
 #!/usr/bin/env node
 
 const oclif = require('@oclif/core')
+const tsConfigPaths = require('tsconfig-paths')
 
-oclif.run().then(require('@oclif/core/flush')).catch(require('@oclif/core/handle'))
+tsConfigPaths.register({
+  baseUrl: 'src',
+  paths: {
+    'csv-writer': ['src/types/csvWriter'],
+    '@utils/*': ['./Utils/*'],
+    '@type/*': ['./types/*'],
+  },
+})
+oclif
+  .run()
+  .then(require('@oclif/core/flush'))
+  .catch(require('@oclif/core/handle'))

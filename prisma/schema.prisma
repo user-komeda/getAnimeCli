@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:Anikosama@9219@localhost:3306/mysql"
+  url      = "mysql://root:jnFiOgP1WkgJQLc@localhost:3306/application"
 }
 
 model anime {

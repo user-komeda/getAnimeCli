@@ -1,4 +1,4 @@
-import EpisodeObject from '../types/EpisodeObject'
+import EpisodeObject from '@type/EpisodeObject'
 import { wikiTextParseEpisode } from './wikiTextParse'
 
 /**

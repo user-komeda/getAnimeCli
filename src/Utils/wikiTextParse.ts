@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
-import EpisodeObject from '../types/EpisodeObject'
-import voiceActorObject from 'src/types/VoiceActorObject'
+import EpisodeObject from '@type/EpisodeObject'
+import voiceActorObject from '@type/VoiceActorObject'
 
 /**
  * characterList取得

@@ -1,4 +1,4 @@
-import voiceActorObject from 'src/types/VoiceActorObject'
+import voiceActorObject from '@type/VoiceActorObject'
 import { wikiTextParseVoiceActor } from './wikiTextParse'
 const getVoiceActor = (
   text: string,

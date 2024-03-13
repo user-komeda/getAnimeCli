@@ -5,7 +5,7 @@ import getEpisodes from './getEpisode'
 import getVoiceActor from './getVoiceActor'
 import getStaffList from './getStaffList'
 import getSound from './getSound'
-import AnimeData from '../types/AnimeData'
+import AnimeData from '@type/AnimeData'
 import getTelevisedBroadcastDate from './getTelevisedBroadcastDate'
 
 const getPageData = async (pageId: string): Promise<AnimeData> => {
