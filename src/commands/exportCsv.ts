@@ -1,9 +1,9 @@
 import { Command } from '@oclif/core'
 import * as csvWriter from 'csv-writer'
 import * as fs from 'fs'
-import csvObject from '../types/csvObject'
+import csvObject from '@type/csvObject'
 import path = require('path')
-import AnimeData from 'src/types/AnimeData'
+import AnimeData from '@type/AnimeData'
 
 /**
  * 入力された引数を使用しcsvを出力

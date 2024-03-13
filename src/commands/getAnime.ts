@@ -2,10 +2,10 @@ import { Command, Flags } from '@oclif/core'
 import * as inquirer from 'inquirer'
 import axios from 'axios'
 import cliUx from 'cli-ux'
-import { sleep } from '../Util/sleep'
+import { sleep } from '@utils/sleep'
 import { BASE_URL_JA } from '../const'
-import getPageData from '../Util/getPageData'
-import AnimeData from 'src/types/AnimeData'
+import getPageData from '@utils/getPageData'
+import AnimeData from '@type/AnimeData'
 import * as fs from 'fs'
 import path = require('path')
 
@@ -26,8 +26,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   static flags = {
     content: Flags.string({ options: ['title', 'en-title'] }),
   }
-
-  static args = [{ name: 'person', description: 'Person to say hello to' }]
 
   /**
    * メイン処理
