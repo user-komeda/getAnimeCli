@@ -1,9 +1,9 @@
 import { Command } from '@oclif/core'
 import * as csvWriter from 'csv-writer'
-import * as fs from 'fs'
 import csvObject from '@type/csvObject'
 import path = require('path')
 import AnimeData from '@type/AnimeData'
+import getAnimeJson from '@utils/getAnimeJson'
 
 /**
  * 入力された引数を使用しcsvを出力
@@ -41,35 +41,21 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     // const dates: string[] = args.data.split(',')
 
     this.createCsvObject(
-      this.getAnimeJson(this.TV_ANIME_JSON_FILE_NAME),
+      getAnimeJson(this.TV_ANIME_JSON_FILE_NAME),
       this.TV_ANIME_CSV_FILE_NAME
     )
     this.createCsvObject(
-      this.getAnimeJson(this.WEB_ANIME_JSON_FILE_NAME),
+      getAnimeJson(this.WEB_ANIME_JSON_FILE_NAME),
       this.WEB_ANIME_CSV_FILE_NAME
     )
     this.createCsvObject(
-      this.getAnimeJson(this.OVA_ANIME_JSON_FILE_NAME),
+      getAnimeJson(this.OVA_ANIME_JSON_FILE_NAME),
       this.OVA_ANIME_CSV_FILE_NAME
     )
     this.createCsvObject(
-      this.getAnimeJson(this.MOVIE_ANIME_JSON_FILE_NAME),
+      getAnimeJson(this.MOVIE_ANIME_JSON_FILE_NAME),
       this.MOVIE_ANIME_CSV_FILE_NAME
     )
-  }
-
-  /**
-   *jsonファイルからアニメリストを取得
-   *
-   * @param {string} fileName  fileName
-   * @return {Array<AnimeData>} アニメリスト
-   */
-  private getAnimeJson(fileName: string): Array<AnimeData> {
-    const jsonData = fs.readFileSync(path.join(process.cwd(), 'dist', fileName))
-    const tmpParsedJsonData: Array<AnimeData> = JSON.parse(
-      jsonData.toString()
-    ) as AnimeData[]
-    return tmpParsedJsonData
   }
 
   /**
@@ -131,7 +117,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     if (csvObjectList.length == 0) {
       return
     }
-    console.log(csvObjectList)
     // // csv書き込み設定
     const writer = csvWriter.createObjectCsvWriter({
       path: path.join(process.cwd(), 'dist', fileName),

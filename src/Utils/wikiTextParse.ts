@@ -83,10 +83,11 @@ export const wikiTextParseVoiceActor = (
 
     if (tagName === 'DL') {
       const characterList = whileElement.querySelectorAll('dt')
-      for (const character of characterList) {
+      for (const [index, character] of characterList.entries()) {
         const voiceActor = character.nextElementSibling?.textContent ?? ''
         if (voiceActor[0] === '声') {
           const voiceActor: voiceActorObject = {
+            characterId: index,
             characterName: character.textContent ?? '',
             voiceActorName: character.nextElementSibling?.textContent ?? '',
           }
