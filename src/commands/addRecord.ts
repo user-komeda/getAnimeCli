@@ -229,12 +229,17 @@ export default class AddRecord extends Command {
   ): Array<AnimeTable> {
     const regExp = /年|月|日/gi
     const animeTableList = animeDataList.map((data, index) => {
+      const animeYear = new Date(
+        data.televisedBroadcastDate.replace(regExp, '/')
+      )
+      const month = animeYear.getMonth() + 1 || 0
+      const animeCool = Math.ceil(month / 3)
       const animeTable: AnimeTable = {
         id: index,
         anime_name: data.title,
         anime_en_name: data.title,
-        anime_cool: 1,
-        anime_year: new Date(data.televisedBroadcastDate.replace(regExp, '/')),
+        anime_cool: animeCool,
+        anime_year: animeYear,
       }
       return animeTable
     })
