@@ -49,13 +49,17 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
     switch (stage) {
       case 'title':
-        console.time('a')
         this.year = await cliUx.prompt('Please enter the year you want to get')
+        console.time('a')
         this.log('anime')
         category = `Category:${this.year}年のテレビアニメ`
+        fs.mkdirSync(path.join(process.cwd(), 'dist', this.year), {
+          recursive: true,
+        })
         this.buildUrl(category)
+        console.log(this.baseUrl)
         fs.writeFileSync(
-          path.join(process.cwd(), 'dist', 'tvAnime.json'),
+          path.join(process.cwd(), 'dist', this.year, 'tvAnime.json'),
           JSON.stringify(await this.getAnimeData(this.baseUrl))
         )
         console.timeEnd('a')
@@ -66,7 +70,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         category = `Category:${this.year}年のWebアニメ`
         this.buildUrl(category)
         fs.writeFileSync(
-          path.join(process.cwd(), 'dist', 'webAnime.json'),
+          path.join(process.cwd(), 'dist', this.year, 'webAnime.json'),
           JSON.stringify(await this.getAnimeData(this.baseUrl))
         )
         console.timeEnd('b')
@@ -77,7 +81,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         category = `Category:${this.year}年のアニメ映画`
         this.buildUrl(category)
         fs.writeFileSync(
-          path.join(process.cwd(), 'dist', 'movieAnime.json'),
+          path.join(process.cwd(), 'dist', this.year, 'movieAnime.json'),
           JSON.stringify(await this.getAnimeData(this.baseUrl))
         )
         console.timeEnd('c')
@@ -88,7 +92,7 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         category = `Category:${this.year}年のOVA`
         this.buildUrl(category)
         fs.writeFileSync(
-          path.join(process.cwd(), 'dist', 'ovaAnime.json'),
+          path.join(process.cwd(), 'dist', this.year, 'ovaAnime.json'),
           JSON.stringify(await this.getAnimeData(this.baseUrl))
         )
         console.timeEnd('d')

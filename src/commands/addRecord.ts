@@ -11,15 +11,14 @@ import getAnimeJson from '@utils/getAnimeJson'
 import AnimeData from '@type/AnimeData'
 import CharacterTable from '@type/CharacterTable'
 import EpisodeTable from '@type/EpisodeTable'
+import { spawn } from 'child_process'
+import * as fs from 'fs'
+import path = require('path')
 
 /**
  * データベースにレコードを登録する
  */
 export default class AddRecord extends Command {
-  private TV_ANIME_JSON_FILE_NAME = 'tvAnime.json'
-  private WEB_ANIME_JSON_FILE_NAME = 'webAnime.json'
-  private OVA_ANIME_JSON_FILE_NAME = 'ovaAnime.json'
-  private MOVIE_ANIME_JSON_FILE_NAME = 'movieAnime.json'
   static description = 'describe the command here'
 
   static examples = ['<%= config.bin %> <%= command.id %>']
@@ -32,25 +31,32 @@ export default class AddRecord extends Command {
    * メイン処理
    */
   public async run(): Promise<void> {
-    //  動作確認用にコメントアウト
-    const tvAnimeDataList = getAnimeJson(this.TV_ANIME_JSON_FILE_NAME)
-    const ovaAnimeDataList = getAnimeJson(this.OVA_ANIME_JSON_FILE_NAME)
-    const mvAnimeDataList = getAnimeJson(this.MOVIE_ANIME_JSON_FILE_NAME)
-    const webAnimeDataList = getAnimeJson(this.WEB_ANIME_JSON_FILE_NAME)
-
-    const animeDataList = tvAnimeDataList
-      .concat(ovaAnimeDataList)
-      .concat(mvAnimeDataList)
-      .concat(webAnimeDataList)
-
-    await this.addRecordAnime(this.createAnimeTableData(animeDataList))
-    await this.addRecordSound(this.createSoundTableData(animeDataList))
-    await this.addRecordCharacter(this.createCharacterTableData(animeDataList))
-    await this.addRecordStaff(this.createStaffTableData(animeDataList))
-    await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
-    await this.addRecordVoiceActor(
-      this.createVoiceActorTableData(animeDataList)
+    if (fs.existsSync(path.join(process.cwd(), 'dist', 'anime.json'))) {
+      fs.unlinkSync(path.join(process.cwd(), 'dist', 'anime.json'))
+    }
+    const cat = spawn(
+      "dir ./dist -include ('*.json' ) -recurse | cat | jq -s . > dist/anime.json",
+      {
+        shell: 'pwsh.exe',
+        stdio: 'inherit',
+      }
     )
+    cat.on('exit', async () => {
+      const animeDataList = getAnimeJson('anime.json')
+      console.log(animeDataList)
+      console.time('aaa')
+      await this.addRecordAnime(this.createAnimeTableData(animeDataList))
+      await this.addRecordSound(this.createSoundTableData(animeDataList))
+      await this.addRecordCharacter(
+        this.createCharacterTableData(animeDataList)
+      )
+      await this.addRecordStaff(this.createStaffTableData(animeDataList))
+      await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
+      await this.addRecordVoiceActor(
+        this.createVoiceActorTableData(animeDataList)
+      )
+      console.timeEnd('aaa')
+    })
   }
 
   /**
