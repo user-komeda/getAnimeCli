@@ -13,6 +13,9 @@ const getAnimeJson = (fileName: string): Array<AnimeData> => {
   const tmpParsedJsonData: Array<AnimeData> = JSON.parse(
     jsonData.toString()
   ) as AnimeData[]
-  return tmpParsedJsonData
+  const a = tmpParsedJsonData.map((data) => {
+    return JSON.parse(JSON.stringify(data)) as AnimeData[]
+  })
+  return a.flat()
 }
 export default getAnimeJson
