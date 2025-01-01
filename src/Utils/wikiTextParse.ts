@@ -210,8 +210,10 @@ export const wikiTextParseEpisode = (
       searchIndex = index
     }
   }
-  const tableElement =
+  const _tableElement =
     elementList[searchIndex]?.parentElement?.nextElementSibling
+  const tableElement = searchTableElement(_tableElement ?? null)
+  console.log(tableElement?.className, tableElement?.tagName)
   const episodeList: Array<EpisodeObject> = []
   if (tableElement) {
     const trElementList = tableElement.querySelectorAll('tr')
@@ -234,7 +236,16 @@ export const wikiTextParseEpisode = (
   }
   return episodeList
 }
-
+const searchTableElement = (element: Element | null): Element | null => {
+  if (element === null) {
+    return element
+  }
+  if (element.tagName === 'TABLE' || element.className.includes('wikitable')) {
+    return element
+  } else {
+    return searchTableElement(element.nextElementSibling)
+  }
+}
 /**
  * parseTelevisedBroadcastDate
  *
