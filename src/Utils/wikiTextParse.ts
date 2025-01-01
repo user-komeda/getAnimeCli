@@ -19,32 +19,37 @@ export const wikiTextParseCharacter = (
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.textContent === content) {
+    if (element.id === content) {
       searchIndex = index
     }
   }
 
-  let whileElement: Element | null = elementList[searchIndex]
-  while (whileElement) {
-    whileElement = whileElement.nextElementSibling
-    if (!whileElement) {
-      break
-    }
+  try {
+    let whileElement: Element | null =
+      elementList[searchIndex].parentElement?.nextElementSibling ?? null
+    while (whileElement) {
+      whileElement = whileElement.nextElementSibling ?? null
+      if (!whileElement) {
+        break
+      }
 
-    const tagName = whileElement.tagName
-    if (tagName === 'H2') {
-      break
-    }
+      if (whileElement.className.includes('mw-heading2')) {
+        break
+      }
 
-    if (tagName === 'DL') {
-      const characterList = whileElement.querySelectorAll('dt')
-      for (const character of characterList) {
-        characterListData.push(character.textContent ?? '')
+      if (whileElement.tagName === 'DL') {
+        const characterList = whileElement.querySelectorAll('dt')
+        for (const character of characterList) {
+          console.log(character.textContent)
+          characterListData.push(character.textContent ?? '')
+        }
       }
     }
+    return characterListData
+  } catch (e) {
+    console.error(e)
+    return []
   }
-
-  return characterListData
 }
 
 /**
@@ -64,40 +69,45 @@ export const wikiTextParseVoiceActor = (
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.textContent === content) {
+    if (element.id === content) {
       searchIndex = index
     }
   }
 
-  let whileElement: Element | null = elementList[searchIndex]
-  while (whileElement) {
-    whileElement = whileElement.nextElementSibling
-    if (!whileElement) {
-      break
-    }
+  try {
+    let whileElement: Element | null =
+      elementList[searchIndex].parentElement?.nextElementSibling ?? null
+    while (whileElement) {
+      whileElement = whileElement.nextElementSibling
+      if (!whileElement) {
+        break
+      }
 
-    const tagName = whileElement.tagName
-    if (tagName === 'H2') {
-      break
-    }
+      if (whileElement.className.includes('mw-heading2')) {
+        break
+      }
 
-    if (tagName === 'DL') {
-      const characterList = whileElement.querySelectorAll('dt')
-      for (const [index, character] of characterList.entries()) {
-        const voiceActor = character.nextElementSibling?.textContent ?? ''
-        if (voiceActor[0] === '声') {
-          const voiceActor: voiceActorObject = {
-            characterId: index,
-            characterName: character.textContent ?? '',
-            voiceActorName: character.nextElementSibling?.textContent ?? '',
+      if (whileElement.tagName === 'DL') {
+        const characterList = whileElement.querySelectorAll('dt')
+        for (const [index, character] of characterList.entries()) {
+          const voiceActor = character.nextElementSibling?.textContent ?? ''
+          if (voiceActor[0] === '声') {
+            const voiceActor: voiceActorObject = {
+              characterId: index,
+              characterName: character.textContent ?? '',
+              voiceActorName: character.nextElementSibling?.textContent ?? '',
+            }
+            voiceActorList.push(voiceActor)
           }
-          voiceActorList.push(voiceActor)
         }
       }
     }
-  }
 
-  return voiceActorList
+    return voiceActorList
+  } catch (e) {
+    console.error(e)
+    return []
+  }
 }
 
 /**
@@ -117,12 +127,12 @@ export const wikiTextParseStaff = (
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.textContent === content) {
+    if (element.id === content) {
       searchIndex = index
     }
   }
 
-  const ulElement = elementList[searchIndex]?.nextElementSibling
+  const ulElement = elementList[searchIndex]?.parentElement?.nextElementSibling
   const liElementList = ulElement?.querySelectorAll('li')
   if (liElementList) {
     for (const liElement of liElementList) {
@@ -150,7 +160,7 @@ export const wikiTextParseSound = (
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.textContent === content) {
+    if (element.id === content) {
       searchIndex = index
     }
   }
@@ -158,7 +168,7 @@ export const wikiTextParseSound = (
   let whileElement: Element | null = elementList[searchIndex]
 
   while (whileElement) {
-    whileElement = whileElement.nextElementSibling
+    whileElement = whileElement.parentElement?.nextElementSibling ?? null
     if (!whileElement) {
       break
     }
@@ -196,11 +206,12 @@ export const wikiTextParseEpisode = (
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.textContent === content) {
+    if (element.id === content) {
       searchIndex = index
     }
   }
-  const tableElement = elementList[searchIndex]?.nextElementSibling
+  const tableElement =
+    elementList[searchIndex]?.parentElement?.nextElementSibling
   const episodeList: Array<EpisodeObject> = []
   if (tableElement) {
     const trElementList = tableElement.querySelectorAll('tr')
@@ -210,7 +221,6 @@ export const wikiTextParseEpisode = (
       if (!tdElement) {
         continue
       }
-
       const episodeNumber = tdElement[0]?.textContent
       const episodeTitle = tdElement[1]?.textContent
       if (episodeNumber && episodeTitle) {

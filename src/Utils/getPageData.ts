@@ -45,17 +45,18 @@ const sendRequest = async (requestUrl: string): Promise<AnimeData> => {
     const title = response.data.parse.title
     const pageId = response.data.parse.pageid
     const parseText = response.data.parse.text['*']
+    console.log(title)
     const televisedBroadcastDate = getTelevisedBroadcastDate(parseText, [
       '放送期間',
       '発表期間',
       '封切日',
       '公開',
     ])
-    const characterList = getCharacterList(parseText, '登場人物[編集]')
-    const episodeList = getEpisodes(parseText, '各話リスト[編集]')
-    const voiceActorList = getVoiceActor(parseText, '登場人物[編集]')
-    const staffList = getStaffList(parseText, 'スタッフ[編集]')
-    const soundList = getSound(parseText, '主題歌[編集]')
+    const episodeList = getEpisodes(parseText, '各話リスト')
+    const characterList = getCharacterList(parseText, '登場人物')
+    const voiceActorList = getVoiceActor(parseText, '登場人物')
+    const staffList = getStaffList(parseText, 'スタッフ')
+    const soundList = getSound(parseText, '主題歌')
     const animeData: AnimeData = {
       pageId,
       title,
