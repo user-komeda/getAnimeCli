@@ -9,6 +9,7 @@
     "target": "es2019",
     "baseUrl": "src",
     "composite": true,
+    "esModuleInterop": true,
     "paths": {
       "@utils/*":["./Utils/*"],
       "@type/*":["./types/*"]

@@ -4,7 +4,6 @@ import voiceActorObject from '@type/VoiceActorObject'
 
 /**
  * characterList取得
- *
  * @param {string} text text
  * @param {string} content content
  * @return {string} text
@@ -54,7 +53,6 @@ export const wikiTextParseCharacter = (
 
 /**
  * 声優情報取得
- *
  * @param {string} text text
  * @param {string} content content
  * @return {string} text
@@ -112,7 +110,6 @@ export const wikiTextParseVoiceActor = (
 
 /**
  * parseStaffInfoFromGetResponseData
- *
  * @param {string} text text
  * @param {string} content context
  * @return {string} text
@@ -145,7 +142,6 @@ export const wikiTextParseStaff = (
 
 /**
  * parseSoundInfoFromGetResponseData
- *
  * @param {string} text text
  * @param {string} content content
  * @return {string} text
@@ -192,7 +188,6 @@ export const wikiTextParseSound = (
 
 /**
  * parseEpisodeInfoFromGetResponseData
- *
  * @param {string} text text
  * @param {string} content content
  * @return {string} text
@@ -248,7 +243,6 @@ const searchTableElement = (element: Element | null): Element | null => {
 }
 /**
  * parseTelevisedBroadcastDate
- *
  * @param {string} text text
  * @param {Array<string>} content content
  * @return {string} text
@@ -284,7 +278,6 @@ export const wikiTextParseTelevisedBroadcastDate = (
 
 /**
  * ページ内テキストから見出しをすべて取得
- *
  * @param {string} text text
  * @return {Element} Element
  */

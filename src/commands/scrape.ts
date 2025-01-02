@@ -2,8 +2,7 @@ import { sleep } from '@utils/sleep'
 import { Command } from '@oclif/core'
 import axios, { AxiosResponse } from 'axios'
 import { JSDOM } from 'jsdom'
-import cliUx from 'cli-ux'
-import * as inquirer from 'inquirer'
+import { input, select } from '@inquirer/prompts'
 
 /**
  * スクレイプ処理
@@ -17,21 +16,19 @@ export default class Scrape extends Command {
    * メイン処理
    */
   public async run(): Promise<void> {
-    const responses = await inquirer.prompt([
-      {
-        name: 'content',
-        message: 'select a content',
-        type: 'list',
-        choices: [
-          { name: 'winter' },
-          { name: 'spring' },
-          { name: 'summer' },
-          { name: 'autumn' },
-        ],
-      },
-    ])
-    const year = await cliUx.prompt('Please enter the year you want to get')
-    const url = `https://annict.com/db/works?season_slugs%5B%5D=${year}-${responses.content}&commit=%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B`
+    const responses = await select({
+      message: 'select a content',
+      choices: [
+        { name: 'winter', value: 'winter' },
+        { name: 'spring', value: 'spring' },
+        { name: 'summer', value: 'summer' },
+        { name: 'autumn', value: 'autumn' },
+      ],
+    })
+    const year = await input({
+      message: 'Please enter the year you want to get',
+    })
+    const url = `https://annict.com/db/works?season_slugs%5B%5D=${year}-${responses}&commit=%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B`
     const baseUrl = 'https://annict.com/'
     console.log(url)
     const response: AxiosResponse<string, string> = await axios.get(url)

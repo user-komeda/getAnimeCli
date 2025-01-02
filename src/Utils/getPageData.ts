@@ -16,7 +16,6 @@ const getPageData = async (pageId: string): Promise<AnimeData> => {
 
 /**
  *pageIdからURL生成
- *
  * @param {string} pageId pageId
  * @return {string} buildUrl
  */
@@ -26,7 +25,6 @@ const convertPageIdToUrl = (pageId: string): string => {
 
 /**
  * url作成
- *
  * @param {string} value クエリパラメータ
  * @return {string} url
  */

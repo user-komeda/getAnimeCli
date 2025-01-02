@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import { Command, Flags } from '@oclif/core'
 import { PrismaClient } from '@prisma/client'
 import AnimeTable from '@type/AnimeTable'
@@ -12,8 +11,8 @@ import AnimeData from '@type/AnimeData'
 import CharacterTable from '@type/CharacterTable'
 import EpisodeTable from '@type/EpisodeTable'
 import { spawn } from 'child_process'
-import * as fs from 'fs'
-import path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 /**
  * データベースにレコードを登録する
@@ -45,23 +44,28 @@ export default class AddRecord extends Command {
       const animeDataList = getAnimeJson('anime.json')
       console.log(animeDataList)
       console.time('aaa')
-      await this.addRecordAnime(this.createAnimeTableData(animeDataList))
-      await this.addRecordSound(this.createSoundTableData(animeDataList))
-      await this.addRecordCharacter(
-        this.createCharacterTableData(animeDataList)
-      )
-      await this.addRecordStaff(this.createStaffTableData(animeDataList))
-      await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
-      await this.addRecordVoiceActor(
-        this.createVoiceActorTableData(animeDataList)
-      )
+
+      try {
+        await this.addRecordAnime(this.createAnimeTableData(animeDataList))
+        await this.addRecordSound(this.createSoundTableData(animeDataList))
+        await this.addRecordCharacter(
+          this.createCharacterTableData(animeDataList)
+        )
+        await this.addRecordStaff(this.createStaffTableData(animeDataList))
+        await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
+        await this.addRecordVoiceActor(
+          this.createVoiceActorTableData(animeDataList)
+        )
+      } catch (error) {
+        console.error(error)
+      }
+
       console.timeEnd('aaa')
     })
   }
 
   /**
    * レコード登録関数
-   *
    * @param {Array<AnimeTable>} dates  登録データ
    */
   private async addRecordAnime(dates: Array<AnimeTable>) {
@@ -91,7 +95,6 @@ export default class AddRecord extends Command {
 
   /**
    * animeテーブル登録関数
-   *
    * @param {Array<SoundTable>} datas datas
    */
   private async addRecordSound(datas: Array<SoundTable>) {
@@ -119,7 +122,6 @@ export default class AddRecord extends Command {
 
   /**
    * staffテーブル登録関数
-   *
    * @param {Array<StaffTable>} datas datas
    */
   private async addRecordStaff(datas: Array<StaffTable>) {
@@ -145,7 +147,6 @@ export default class AddRecord extends Command {
 
   /**
    * キャラクタテーブル登録関数
-   *
    * @param {Array<characterTable>} datas datas
    */
   private async addRecordCharacter(datas: Array<characterTable>) {
@@ -170,7 +171,6 @@ export default class AddRecord extends Command {
 
   /**
    * 声優テーブル登録関数
-   *
    * @param {Array<voiceActorTable>} datas datas
    */
   private async addRecordVoiceActor(datas: Array<voiceActorTable>) {
@@ -198,7 +198,6 @@ export default class AddRecord extends Command {
 
   /**
    * episodeテーブル登録関数
-   *
    * @param {Array<SoundTable>} datas datas
    */
   private async addRecordEpisode(datas: Array<episodeTable>) {
@@ -226,7 +225,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<AnimeData>} テーブルに登録するデータ
    */
@@ -254,7 +252,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<CharacterTable>} テーブルに登録するデータ
    */
@@ -277,7 +274,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<SoundTable>} テーブルに登録するデータ
    */
@@ -301,7 +297,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<EpisodeTable>} テーブルに登録するデータ
    */
@@ -326,7 +321,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<StaffTable>} テーブルに登録するデータ
    */
@@ -349,7 +343,6 @@ export default class AddRecord extends Command {
 
   /**
    *取得したアニメ情報をもとにテーブルに登録する情報を作成
-   *
    * @param {Array<AnimeData>} animeDataList アニメ情報
    * @return {Array<voiceActorTable>} テーブルに登録するデータ
    */
