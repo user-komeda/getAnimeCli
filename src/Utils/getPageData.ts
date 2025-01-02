@@ -43,7 +43,6 @@ const sendRequest = async (requestUrl: string): Promise<AnimeData> => {
     const title = response.data.parse.title
     const pageId = response.data.parse.pageid
     const parseText = response.data.parse.text['*']
-    console.log(title)
     const televisedBroadcastDate = getTelevisedBroadcastDate(parseText, [
       '放送期間',
       '発表期間',

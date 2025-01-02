@@ -42,23 +42,18 @@ export default class AddRecord extends Command {
     )
     cat.on('exit', async () => {
       const animeDataList = getAnimeJson('anime.json')
-      console.log(animeDataList)
       console.time('aaa')
 
-      try {
-        await this.addRecordAnime(this.createAnimeTableData(animeDataList))
-        await this.addRecordSound(this.createSoundTableData(animeDataList))
-        await this.addRecordCharacter(
-          this.createCharacterTableData(animeDataList)
-        )
-        await this.addRecordStaff(this.createStaffTableData(animeDataList))
-        await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
-        await this.addRecordVoiceActor(
-          this.createVoiceActorTableData(animeDataList)
-        )
-      } catch (error) {
-        console.error(error)
-      }
+      await this.addRecordAnime(this.createAnimeTableData(animeDataList))
+      await this.addRecordSound(this.createSoundTableData(animeDataList))
+      await this.addRecordCharacter(
+        this.createCharacterTableData(animeDataList)
+      )
+      await this.addRecordStaff(this.createStaffTableData(animeDataList))
+      await this.addRecordEpisode(this.createEpisodeTableData(animeDataList))
+      await this.addRecordVoiceActor(
+        this.createVoiceActorTableData(animeDataList)
+      )
 
       console.timeEnd('aaa')
     })
@@ -70,26 +65,29 @@ export default class AddRecord extends Command {
    */
   private async addRecordAnime(dates: Array<AnimeTable>) {
     const prisma = new PrismaClient()
-
     for (const data of dates) {
-      await prisma.anime.upsert({
-        where: {
-          id: data.id,
-        },
-        update: {
-          anime_name: data.anime_name,
-          anime_en_name: data.anime_en_name,
-          anime_year: data.anime_year,
-          anime_cool: data.anime_cool,
-        },
-        create: {
-          id: data.id,
-          anime_name: data.anime_name,
-          anime_en_name: data.anime_en_name,
-          anime_year: data.anime_year,
-          anime_cool: data.anime_cool,
-        },
-      })
+      try {
+        await prisma.anime.upsert({
+          where: {
+            id: data.id,
+          },
+          update: {
+            anime_name: data.anime_name,
+            anime_en_name: data.anime_en_name,
+            anime_year: data.anime_year,
+            anime_cool: data.anime_cool,
+          },
+          create: {
+            id: data.id,
+            anime_name: data.anime_name,
+            anime_en_name: data.anime_en_name,
+            anime_year: data.anime_year,
+            anime_cool: data.anime_cool,
+          },
+        })
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 

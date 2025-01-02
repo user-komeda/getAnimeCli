@@ -39,7 +39,6 @@ export const wikiTextParseCharacter = (
       if (whileElement.tagName === 'DL') {
         const characterList = whileElement.querySelectorAll('dt')
         for (const character of characterList) {
-          console.log(character.textContent)
           characterListData.push(character.textContent ?? '')
         }
       }
@@ -208,7 +207,6 @@ export const wikiTextParseEpisode = (
   const _tableElement =
     elementList[searchIndex]?.parentElement?.nextElementSibling
   const tableElement = searchTableElement(_tableElement ?? null)
-  console.log(tableElement?.className, tableElement?.tagName)
   const episodeList: Array<EpisodeObject> = []
   if (tableElement) {
     const trElementList = tableElement.querySelectorAll('tr')

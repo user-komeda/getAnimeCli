@@ -4,6 +4,7 @@ import csvObject from '@type/csvObject'
 import path from 'path'
 import AnimeData from '@type/AnimeData'
 import getAnimeJson from '@utils/getAnimeJson'
+import * as fs from 'fs'
 
 /**
  * 入力された引数を使用しcsvを出力
@@ -39,30 +40,46 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     // const { args } = await this.parse(ExportCsv)
     // // データをカンマ区切りにする
     // const dates: string[] = args.data.split(',')
-    this.createCsvObject(
-      getAnimeJson(this.TV_ANIME_JSON_FILE_NAME),
-      this.TV_ANIME_CSV_FILE_NAME
-    )
-    this.createCsvObject(
-      getAnimeJson(this.WEB_ANIME_JSON_FILE_NAME),
-      this.WEB_ANIME_CSV_FILE_NAME
-    )
-    this.createCsvObject(
-      getAnimeJson(this.OVA_ANIME_JSON_FILE_NAME),
-      this.OVA_ANIME_CSV_FILE_NAME
-    )
-    this.createCsvObject(
-      getAnimeJson(this.MOVIE_ANIME_JSON_FILE_NAME),
-      this.MOVIE_ANIME_CSV_FILE_NAME
-    )
+    const directoryList = fs
+      .readdirSync(path.join(process.cwd(), 'dist'))
+      .filter((v) => {
+        return fs.statSync(path.join(process.cwd(), 'dist', v)).isDirectory()
+      })
+    directoryList.forEach((v) => {
+      this.createCsvObject(
+        getAnimeJson(this.TV_ANIME_JSON_FILE_NAME, v),
+        this.TV_ANIME_CSV_FILE_NAME,
+        v
+      )
+      this.createCsvObject(
+        getAnimeJson(this.WEB_ANIME_JSON_FILE_NAME, v),
+        this.WEB_ANIME_CSV_FILE_NAME,
+        v
+      )
+      this.createCsvObject(
+        getAnimeJson(this.OVA_ANIME_JSON_FILE_NAME, v),
+        this.OVA_ANIME_CSV_FILE_NAME,
+        v
+      )
+      this.createCsvObject(
+        getAnimeJson(this.MOVIE_ANIME_JSON_FILE_NAME, v),
+        this.MOVIE_ANIME_CSV_FILE_NAME,
+        v
+      )
+    })
   }
 
   /**
    *csv作成
    * @param {Array<AnimeData>} parsedJsonData parsedJsonData
    * @param {string} fileName fileName
+   * @param {string} directoryName directoryName
    */
-  private createCsvObject(parsedJsonData: Array<AnimeData>, fileName: string) {
+  private createCsvObject(
+    parsedJsonData: Array<AnimeData>,
+    fileName: string,
+    directoryName: string
+  ) {
     const csvObjectList: Array<csvObject> = []
     for (const data of parsedJsonData) {
       const episodeListTitle = []
@@ -102,21 +119,26 @@ hello friend from oclif! (./src/commands/hello/index.ts)
       csvObject.voiceActorListVoiceActor = voiceActorListVoiceActor
       csvObjectList.push(csvObject)
     }
-    this.writeCsv(csvObjectList, fileName)
+    this.writeCsv(csvObjectList, fileName, directoryName)
   }
 
   /**
    *csv書き込み
    * @param {Array<csvObject>} csvObjectList csvObjectList
    * @param {string} fileName fileName
+   * @param {string} directoryName directoryName
    */
-  private writeCsv(csvObjectList: Array<csvObject>, fileName: string) {
+  private writeCsv(
+    csvObjectList: Array<csvObject>,
+    fileName: string,
+    directoryName: string
+  ) {
     if (csvObjectList.length == 0) {
       return
     }
     // // csv書き込み設定
     const writer = csvWriter.createObjectCsvWriter({
-      path: path.join(process.cwd(), 'dist', fileName),
+      path: path.join(process.cwd(), 'dist', directoryName, fileName),
       header: Object.keys(csvObjectList[0]).map((v) => ({
         id: v,
         title: v,
