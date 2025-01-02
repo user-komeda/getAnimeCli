@@ -117,25 +117,45 @@ export const wikiTextParseStaff = (
   text: string,
   content: string
 ): Array<string> => {
-  const staffList: Array<string> = []
   const elementList = selectSection(
     text.replace(/<style(\s|>).*?<\/style>/gi, '')
   )
   let searchIndex = 0
   for (const [index, element] of elementList.entries()) {
-    if (element.id === content) {
+    if (element.id === content || element.id === 'スタッフ（テレビアニメ）') {
       searchIndex = index
     }
   }
 
-  const ulElement = elementList[searchIndex]?.parentElement?.nextElementSibling
-  const liElementList = ulElement?.querySelectorAll('li')
+  const element = elementList[searchIndex]?.parentElement?.nextElementSibling
+  return element?.tagName === 'UL'
+    ? getStaffListByUl(element)
+    : getStaffListByTable(element ?? null)
+}
+
+const getStaffListByUl = (element: Element | null): Array<string> => {
+  const staffList: Array<string> = []
+  const liElementList = element?.querySelectorAll('li')
   if (liElementList) {
     for (const liElement of liElementList) {
       staffList.push(liElement.textContent ?? '')
     }
   }
+  return staffList
+}
 
+const getStaffListByTable = (element: Element | null): Array<string> => {
+  const staffList: Array<string> = []
+  const trElementList = element?.querySelectorAll('tr')
+  if (trElementList) {
+    for (const trElement of trElementList) {
+      const th = trElement.querySelector('th')?.textContent
+      const td = trElement.querySelector('td')?.textContent
+      if (th && td) {
+        staffList.push(`${th} - ${td}`)
+      }
+    }
+  }
   return staffList
 }
 
