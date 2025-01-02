@@ -1,10 +1,9 @@
 import AnimeData from '@type/AnimeData'
-import path = require('path')
-import * as fs from 'fs'
+import path from 'path'
+import fs from 'fs'
 
 /**
  *jsonファイルからアニメリストを取得
- *
  * @param {string} fileName  fileName
  * @return {Array<AnimeData>} アニメリスト
  */

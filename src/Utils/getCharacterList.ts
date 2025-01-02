@@ -2,7 +2,6 @@ import { wikiTextParseCharacter } from './wikiTextParse'
 
 /**
  * characterList取得
- *
  * @param {string} text text
  * @param {string} content content
  * @return {Array<string>} characterList

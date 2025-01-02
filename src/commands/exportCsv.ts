@@ -1,7 +1,7 @@
 import { Command } from '@oclif/core'
 import * as csvWriter from 'csv-writer'
 import csvObject from '@type/csvObject'
-import path = require('path')
+import path from 'path'
 import AnimeData from '@type/AnimeData'
 import getAnimeJson from '@utils/getAnimeJson'
 
@@ -39,7 +39,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     // const { args } = await this.parse(ExportCsv)
     // // データをカンマ区切りにする
     // const dates: string[] = args.data.split(',')
-
     this.createCsvObject(
       getAnimeJson(this.TV_ANIME_JSON_FILE_NAME),
       this.TV_ANIME_CSV_FILE_NAME
@@ -60,7 +59,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
   /**
    *csv作成
-   *
    * @param {Array<AnimeData>} parsedJsonData parsedJsonData
    * @param {string} fileName fileName
    */
@@ -109,7 +107,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
   /**
    *csv書き込み
-   *
    * @param {Array<csvObject>} csvObjectList csvObjectList
    * @param {string} fileName fileName
    */

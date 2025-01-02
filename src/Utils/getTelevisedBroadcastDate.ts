@@ -2,7 +2,6 @@ import { wikiTextParseTelevisedBroadcastDate } from './wikiTextParse'
 
 /**
  * 放送期間を取得
- *
  * @param {string} text text
  * @param {Array<string>} content content
  * @return {string} televisedBroadcastDate

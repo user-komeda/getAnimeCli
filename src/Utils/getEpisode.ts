@@ -3,7 +3,6 @@ import { wikiTextParseEpisode } from './wikiTextParse'
 
 /**
  * episodeList取得
- *
  * @param {string} text text
  * @param {string} content context
  * @return {Array<EpisodeObject>} episodeList

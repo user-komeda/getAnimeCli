@@ -1,13 +1,13 @@
 import { Command, Flags } from '@oclif/core'
-import * as inquirer from 'inquirer'
 import axios from 'axios'
-import cliUx from 'cli-ux'
+import { select } from '@inquirer/prompts'
+import { input } from '@inquirer/prompts'
 import { sleep } from '@utils/sleep'
 import { BASE_URL_JA } from '../const'
 import getPageData from '@utils/getPageData'
 import AnimeData from '@type/AnimeData'
-import * as fs from 'fs'
-import path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 /**
  * anime取得
@@ -34,22 +34,21 @@ hello friend from oclif! (./src/commands/hello/index.ts)
     const { flags } = await this.parse(GetAnime)
     let stage = flags.content
     if (!stage) {
-      const responses = await inquirer.prompt([
-        {
-          name: 'content',
-          message: 'select a content',
-          type: 'list',
-          choices: [{ name: 'title' }, { name: 'production' }],
-        },
-      ])
-      stage = responses.content
+      stage = await select({
+        message: 'select a content',
+        choices: [
+          { name: 'title', value: 'title' },
+          { name: 'en-title', value: 'en-title' },
+        ],
+      })
     }
 
-    let category = ''
-
     switch (stage) {
-      case 'title':
-        this.year = await cliUx.prompt('Please enter the year you want to get')
+      case 'title': {
+        let category = ''
+        this.year = await input({
+          message: 'Please enter the year you want to get',
+        })
         console.time('a')
         this.log('anime')
         category = `Category:${this.year}年のテレビアニメ`
@@ -98,6 +97,11 @@ hello friend from oclif! (./src/commands/hello/index.ts)
         console.timeEnd('d')
         await sleep(3_000)
         break
+      }
+
+      case 'en-title':
+        console.error('failed')
+        break
 
       default:
         break
@@ -126,7 +130,6 @@ hello friend from oclif! (./src/commands/hello/index.ts)
 
   /**
    * リクエストURLを作成
-   *
    * @param {string} category category
    */
   private buildUrl(category: string): void {
