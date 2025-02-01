@@ -1612,6 +1612,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@oclif/plugin-help@npm:^6.2.23":
+  version: 6.2.23
+  resolution: "@oclif/plugin-help@npm:6.2.23"
+  dependencies:
+    "@oclif/core": "npm:^4"
+  checksum: 7c3f346f3457d65798484f31729e641cf09ccc1fe6142e21a2938d937237a7b6e2f292865b90e747e4e50d49ccf57d8dc044ab9519a072cc2a1bc412c2daabb3
+  languageName: node
+  linkType: hard
+
 "@oclif/plugin-not-found@npm:^3.2.32":
   version: 3.2.33
   resolution: "@oclif/plugin-not-found@npm:3.2.33"
@@ -8007,7 +8016,7 @@ __metadata:
     "@eslint/eslintrc": "npm:3.2.0"
     "@eslint/js": "npm:9.17.0"
     "@json2csv/plainjs": "npm:7.0.6"
-    "@oclif/plugin-help": "npm:^6.2.20"
+    "@oclif/plugin-help": "npm:^6.2.23"
     "@oclif/plugin-plugins": "npm:^5.4.24"
     "@prisma/client": "npm:^6.1.0"
     "@types/axios": "npm:^0.14.4"

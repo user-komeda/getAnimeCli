@@ -15,7 +15,7 @@
     "/oclif.manifest.json"
   ],
   "dependencies": {
-    "@oclif/plugin-help": "^6.2.20",
+    "@oclif/plugin-help": "^6.2.23",
     "@oclif/plugin-plugins": "^5.4.24",
     "@prisma/client": "^6.1.0",
     "@types/axios": "^0.14.4",
