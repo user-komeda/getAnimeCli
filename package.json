@@ -23,7 +23,7 @@
     "@types/jsdom": "^21.1.7",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "csv-writer": "^1.6.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",
