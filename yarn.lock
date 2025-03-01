@@ -1726,15 +1726,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@prisma/client@npm:6.1.0"
+"@prisma/client@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "@prisma/client@npm:6.4.1"
   peerDependencies:
     prisma: "*"
+    typescript: ">=5.1.0"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 6cb3c81ce52e37f4d48598e114ff1f9c46297a3299ddf80701d26794aacb8e46f3726cb20dd4f1528cd7b8a713d38e8e68a1fd2be8c370f0925f92b7a9b6b955
+    typescript:
+      optional: true
+  checksum: fe6c322b473d5ebc3926aafb0a149cb08d9d0df46af71568230fd087e85017f24a7a1e4a09e5817359db494ff7ce7d37ad56459c11c39da98412757acb7f16e9
   languageName: node
   linkType: hard
 
@@ -8009,7 +8012,7 @@ __metadata:
     "@json2csv/plainjs": "npm:7.0.6"
     "@oclif/plugin-help": "npm:^6.2.20"
     "@oclif/plugin-plugins": "npm:^5.4.24"
-    "@prisma/client": "npm:^6.1.0"
+    "@prisma/client": "npm:^6.4.1"
     "@types/axios": "npm:^0.14.4"
     "@types/inquirer": "npm:^9.0.7"
     "@types/jsdom": "npm:^21.1.7"
