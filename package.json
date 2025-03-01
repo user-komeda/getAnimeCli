@@ -28,7 +28,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^50.6.1",
-    "inquirer": "^12.3.0",
+    "inquirer": "^12.4.2",
     "jsdom": "^25.0.1",
     "oclif": "4.17.7",
     "prettier": "^3.4.2",
