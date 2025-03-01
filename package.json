@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@oclif/plugin-help": "^6.2.20",
-    "@oclif/plugin-plugins": "^5.4.24",
+    "@oclif/plugin-plugins": "^5.4.34",
     "@prisma/client": "^6.1.0",
     "@types/axios": "^0.14.4",
     "@types/inquirer": "^9.0.7",
