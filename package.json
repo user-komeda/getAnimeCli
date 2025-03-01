@@ -30,7 +30,7 @@
     "eslint-plugin-jsdoc": "^50.6.1",
     "inquirer": "^12.3.0",
     "jsdom": "^25.0.1",
-    "oclif": "4.17.7",
+    "oclif": "4.17.32",
     "prettier": "^3.4.2",
     "prisma": "^6.1.0",
     "typescript": "5.7.2"
