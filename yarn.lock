@@ -2591,7 +2591,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.10.3, @types/node@npm:^22.5.5":
+"@types/node@npm:22.13.8":
+  version: 22.13.8
+  resolution: "@types/node@npm:22.13.8"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: bfc92b734a9dce6ac5daee0a52feccdf5dcb3804d895e4bc5384e2f4644612b8801725cd03c8c3c0888fb5eeb16b875877ac44b77641e0196dc1a837b1c2a366
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.5.5":
   version: 22.10.3
   resolution: "@types/node@npm:22.10.3"
   dependencies:
@@ -8013,7 +8022,7 @@ __metadata:
     "@types/axios": "npm:^0.14.4"
     "@types/inquirer": "npm:^9.0.7"
     "@types/jsdom": "npm:^21.1.7"
-    "@types/node": "npm:22.10.3"
+    "@types/node": "npm:22.13.8"
     "@typescript-eslint/eslint-plugin": "npm:^8.19.0"
     "@typescript-eslint/parser": "npm:^8.19.0"
     axios: "npm:^1.7.9"
